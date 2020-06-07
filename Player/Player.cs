@@ -68,7 +68,6 @@ public class Player : KinematicBody2D
             }
 
             float animationSpeed = 1 + (2 * (CurrentSpeed / MaxSpeed));
-            GD.Print(animationSpeed);
 
             ATree.Set("parameters/TimeScale/scale", animationSpeed);
 

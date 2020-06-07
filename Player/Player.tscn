@@ -143,18 +143,18 @@ tracks/0/keys = {
 "values": [ 0 ]
 }
 
-[sub_resource type="AnimationNodeTimeScale" id=25]
+[sub_resource type="AnimationNodeTimeScale" id=10]
 
-[sub_resource type="AnimationNodeBlendTree" id=24]
+[sub_resource type="AnimationNodeBlendTree" id=11]
 graph_offset = Vector2( -362.626, -193 )
 nodes/AnimationNodeStateMachine/node = ExtResource( 3 )
 nodes/AnimationNodeStateMachine/position = Vector2( -140, 320 )
-nodes/TimeScale/node = SubResource( 25 )
+nodes/TimeScale/node = SubResource( 10 )
 nodes/TimeScale/position = Vector2( 220, 320 )
 nodes/output/position = Vector2( 440, 340 )
 node_connections = [ "output", 0, "TimeScale", "TimeScale", 0, "AnimationNodeStateMachine" ]
 
-[sub_resource type="AnimationNodeStateMachinePlayback" id=26]
+[sub_resource type="AnimationNodeStateMachinePlayback" id=12]
 
 [node name="Player" type="KinematicBody2D"]
 collision_mask = 30
@@ -185,10 +185,10 @@ anims/Up = SubResource( 8 )
 anims/UpIdle = SubResource( 9 )
 
 [node name="AnimationTree" type="AnimationTree" parent="."]
-tree_root = SubResource( 24 )
+tree_root = SubResource( 11 )
 anim_player = NodePath("../AnimationPlayer")
 active = true
-parameters/AnimationNodeStateMachine/playback = SubResource( 26 )
+parameters/AnimationNodeStateMachine/playback = SubResource( 12 )
 parameters/AnimationNodeStateMachine/Idle/blend_position = Vector2( 0, 0 )
 parameters/AnimationNodeStateMachine/Running/blend_position = Vector2( 0, 0 )
 parameters/TimeScale/scale = 1.0
