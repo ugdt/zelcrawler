@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/wideSword.png-a6c7fe60a2f0309a32c6866b8eb3ef5a.stex"
+path="res://.import/wideSword.png-c863b7d267476928cd0c53032c38fecd.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Player/wideSword.png"
-dest_files=[ "res://.import/wideSword.png-a6c7fe60a2f0309a32c6866b8eb3ef5a.stex" ]
+source_file="res://player/wideSword.png"
+dest_files=[ "res://.import/wideSword.png-c863b7d267476928cd0c53032c38fecd.stex" ]
 
 [params]
 

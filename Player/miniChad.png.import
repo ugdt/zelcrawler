@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/miniChad.png-836b1f94bf6305043b21aad15add638d.stex"
+path="res://.import/miniChad.png-860894b3166f9368b071e9ff2acc7600.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Player/miniChad.png"
-dest_files=[ "res://.import/miniChad.png-836b1f94bf6305043b21aad15add638d.stex" ]
+source_file="res://player/miniChad.png"
+dest_files=[ "res://.import/miniChad.png-860894b3166f9368b071e9ff2acc7600.stex" ]
 
 [params]
 
