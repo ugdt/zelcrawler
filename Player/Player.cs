@@ -24,7 +24,6 @@ public class Player : KinematicBody2D
     private AnimationNodeStateMachinePlayback ATreePlayback;
     private Sword _Sword;
 
-
     public override void _Ready()
     {
         ATree = GetNode<AnimationTree>("AnimationTree");

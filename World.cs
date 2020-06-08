@@ -1,7 +1,6 @@
 using Godot;
 using System;
 using System.Drawing;
-using System.Collections.Generic;
 
 public class World : Node2D
 {
@@ -10,7 +9,7 @@ public class World : Node2D
     TileMap WorldMap;
 
     // Data
-    private int RADIUS = 5;
+    private int RADIUS = 10;
     private OpenSimplexNoise noise = new OpenSimplexNoise();
 
 
@@ -20,6 +19,7 @@ public class World : Node2D
         WorldMap = GetNode<TileMap>("WorldMap");
 
         noise.Period = 10f;
+        noise.Seed = new Random().Next() % 10;
     }
 
     public override void _PhysicsProcess(float delta)
@@ -30,7 +30,7 @@ public class World : Node2D
     public void generateTilesAroundPlayer(Vector2 playerPosition)
     {
         Point playerPos = new Point((int) playerPosition.x, (int) playerPosition.y);
-        Vector2 tileCoord = new Vector2(0, 0);
+        Vector2 tileCoord = Vector2.Zero;
 
 
         for (int x = playerPos.X - RADIUS; x <= playerPos.X; x++)
@@ -50,6 +50,9 @@ public class World : Node2D
 
                         if (WorldMap.GetCell(point.X, point.Y) == -1) 
                         {
+                            int index = (int) Math.Round((noiseAtPoint + 1) * 2.5);
+                            tileCoord.x = index;
+
                             if (noiseAtPoint < 0f)
                             {
                                 WorldMap.SetCell(point.X, point.Y, 0, autotileCoord: tileCoord);
@@ -65,10 +68,4 @@ public class World : Node2D
             }
         }
     }
-
-//  // Called every frame. 'delta' is the elapsed time since the previous frame.
-//  public override void _Process(float delta)
-//  {
-//      
-//  }
 }
