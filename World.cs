@@ -22,61 +22,44 @@ public class World : Node2D
         noise.Period = 10f;
     }
 
-    public override void _PhysicsProcess(float delta) {
+    public override void _PhysicsProcess(float delta)
+    {
         generateTilesAroundPlayer(WorldMap.WorldToMap(Player.Position));
     }
 
-    public void generateTilesAroundPlayer(Vector2 playerPosition) {
+    public void generateTilesAroundPlayer(Vector2 playerPosition)
+    {
         Point playerPos = new Point((int) playerPosition.x, (int) playerPosition.y);
-
         Vector2 tileCoord = new Vector2(0, 0);
 
 
-        for (int x = playerPos.X - RADIUS; x <= playerPos.X; x++) {
-            for (int y = playerPos.Y - RADIUS; y <= playerPos.Y; y++) {
-                if (((x - playerPos.X) ^ 2) + ((y - playerPos.Y) ^ 2) <= (RADIUS ^ 2)) {
+        for (int x = playerPos.X - RADIUS; x <= playerPos.X; x++)
+        {
+            for (int y = playerPos.Y - RADIUS; y <= playerPos.Y; y++)
+            {
+                if (((x - playerPos.X) ^ 2) + ((y - playerPos.Y) ^ 2) <= (RADIUS ^ 2))
+                {
                     int xSym = playerPos.X - (x - playerPos.X);
                     int ySym = playerPos.Y - (y - playerPos.Y);
 
-                    float valOne = noise.GetNoise2d(x, y);
-                    float valTwo = noise.GetNoise2d(x, ySym);
-                    float valThree = noise.GetNoise2d(xSym, y);
-                    float valFour = noise.GetNoise2d(xSym, ySym);
+                    Point[] points = { new Point(x, y), new Point(xSym, y), new Point(x, ySym), new Point(xSym, ySym) };
 
-                    if (valOne < 0f)
+                    foreach (Point point in points)
                     {
-                        WorldMap.SetCell(x, y, 0, autotileCoord: tileCoord);
-                    }
-                    else
-                    {
-                        WorldMap.SetCell(x, y, 1, autotileCoord: tileCoord);
-                    }
+                        float noiseAtPoint = noise.GetNoise2d(point.X, point.Y);
 
-                    if (valTwo < 0f)
-                    {
-                        WorldMap.SetCell(x, ySym, 0, autotileCoord: tileCoord);
-                    }
-                    else
-                    {
-                        WorldMap.SetCell(x, ySym, 1, autotileCoord: tileCoord);
-                    }
+                        if (WorldMap.GetCell(point.X, point.Y) == -1) 
+                        {
+                            if (noiseAtPoint < 0f)
+                            {
+                                WorldMap.SetCell(point.X, point.Y, 0, autotileCoord: tileCoord);
+                            } 
+                            else 
+                            {
+                                WorldMap.SetCell(point.X, point.Y, 1, autotileCoord: tileCoord);
+                            }
+                        }
 
-                    if (valThree < 0f)
-                    {
-                        WorldMap.SetCell(xSym, y, 0, autotileCoord: tileCoord);
-                    }
-                    else
-                    {
-                        WorldMap.SetCell(xSym, y, 1, autotileCoord: tileCoord);
-                    }
-
-                    if (valFour < 0f)
-                    {
-                        WorldMap.SetCell(xSym, ySym, 0, autotileCoord: tileCoord);
-                    }
-                    else
-                    {
-                        WorldMap.SetCell(xSym, ySym, 1, autotileCoord: tileCoord);
                     }
                 }
             }
