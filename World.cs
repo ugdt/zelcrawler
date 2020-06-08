@@ -10,16 +10,20 @@ public class World : Node2D
 
     // Data
     private int RADIUS = 10;
-    private OpenSimplexNoise noise = new OpenSimplexNoise();
-
+    private OpenSimplexNoise noiseOne = new OpenSimplexNoise();
+    private OpenSimplexNoise noiseTwo = new OpenSimplexNoise();
 
     public override void _Ready()
     {
         Player = GetNode<Player>("Entities/Player");
         WorldMap = GetNode<TileMap>("WorldMap");
 
-        noise.Period = 10f;
-        noise.Seed = new Random().Next() % 10;
+        Random random = new Random();
+
+        noiseOne.Period = 10f;
+        noiseOne.Seed = random.Next() % 10;
+        noiseTwo.Period = 10f;
+        noiseTwo.Seed = random.Next() % 10;
     }
 
     public override void _PhysicsProcess(float delta)
@@ -46,14 +50,15 @@ public class World : Node2D
 
                     foreach (Point point in points)
                     {
-                        float noiseAtPoint = noise.GetNoise2d(point.X, point.Y);
+                        float noiseBase = noiseOne.GetNoise2d(point.X, point.Y);
+                        float noiseExtra = noiseTwo.GetNoise2d(point.X, point.Y);
 
                         if (WorldMap.GetCell(point.X, point.Y) == -1) 
                         {
-                            int index = (int) Math.Round((noiseAtPoint + 1) * 2.5);
+                            int index = (int) Math.Round((noiseExtra + 1) * 2.5);
                             tileCoord.x = index;
 
-                            if (noiseAtPoint < 0f)
+                            if (noiseBase < 0.25f)
                             {
                                 WorldMap.SetCell(point.X, point.Y, 0, autotileCoord: tileCoord);
                             } 
