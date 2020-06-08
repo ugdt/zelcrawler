@@ -1,8 +1,9 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://assets/tiny_dungeon_world.png" type="Texture" id=1]
 [ext_resource path="res://Player/Player.tscn" type="PackedScene" id=2]
 [ext_resource path="res://World.cs" type="Script" id=3]
+[ext_resource path="res://ui/debug/Debug.tscn" type="PackedScene" id=4]
 
 [sub_resource type="TileSet" id=1]
 0/name = "grassAtlas"
@@ -64,3 +65,9 @@ format = 1
 
 [node name="Player" parent="World/Entities" instance=ExtResource( 2 )]
 position = Vector2( 32, 32 )
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Debug" parent="CanvasLayer" instance=ExtResource( 4 )]
+margin_right = -0.568848
+margin_bottom = -0.568848
