@@ -11,6 +11,37 @@ public class World : Node2D
     // Data
     private int RADIUS = 10;
     private OpenSimplexNoise noise = new OpenSimplexNoise();
+    private int tiles = 0;
+
+    // World Gen Config
+    [Export] private float Period = 10f;
+    [Export] private int Octaves = 3;
+    [Export] private float Persistence = 0.5f;
+    [Export] private float Lacunarity = 2f;
+
+    public float MapPeriod {
+        get { return Period; }
+    }
+
+    public int MapOctaves {
+        get { return Octaves; }
+    }
+
+    public float MapPersistence {
+        get { return Persistence; }
+    }
+
+    public float MapLacunarity {
+        get { return Lacunarity; }
+    }
+
+    public int MapSeed {
+        get { return noise.Seed; }
+    }
+
+    public int Tiles {
+        get { return tiles; }
+    }
 
     public override void _Ready()
     {
@@ -19,7 +50,10 @@ public class World : Node2D
 
         Random random = new Random();
 
-        noise.Period = 10f;
+        noise.Period = Period;
+        noise.Octaves = Octaves;
+        noise.Persistence = Persistence;
+        noise.Lacunarity = Lacunarity;
         noise.Seed = random.Next() % 10;
     }
 
@@ -62,6 +96,7 @@ public class World : Node2D
                             {
                                 WorldMap.SetCell(point.X, point.Y, 1, autotileCoord: tileCoord);
                             }
+                            tiles++;
                         }
                     }
                 }
