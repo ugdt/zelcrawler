@@ -59,25 +59,25 @@ public class World : Node2D
 
     public override void _PhysicsProcess(float delta)
     {
-        generateTilesAroundPlayer(WorldMap.WorldToMap(Player.Position));
+        generateTiles(WorldMap.WorldToMap(Player.Position));
     }
 
-    public void generateTilesAroundPlayer(Vector2 playerPosition)
+    public void generateTiles(Vector2 position)
     {
-        Point playerPos = new Point((int) playerPosition.x, (int) playerPosition.y);
+        Point originalPoint = new Point((int) position.x, (int) position.y);
         Vector2 tileCoord = Vector2.Zero;
 
 
-        for (int x = (playerPos.X - RADIUS); x <= playerPos.X; x++)
+        for (int x = (originalPoint.X - RADIUS); x <= originalPoint.X; x++)
         {
-            for (int y = (playerPos.Y - RADIUS); y <= playerPos.Y; y++)
+            for (int y = (originalPoint.Y - RADIUS); y <= originalPoint.Y; y++)
             {
-                if (((x - playerPos.X) * (x - playerPos.X)) + ((y - playerPos.Y) * (y - playerPos.Y)) <= (RADIUS * RADIUS))
+                if (((x - originalPoint.X) * (x - originalPoint.X)) + ((y - originalPoint.Y) * (y - originalPoint.Y)) <= (RADIUS * RADIUS))
                 {
-                    int xSym = playerPos.X - (x - playerPos.X);
-                    int ySym = playerPos.Y - (y - playerPos.Y);
+                    int mirroredX = originalPoint.X - (x - originalPoint.X);
+                    int mirroredY = originalPoint.Y - (y - originalPoint.Y);
 
-                    Point[] points = { new Point(x, y), new Point(xSym, y), new Point(x, ySym), new Point(xSym, ySym) };
+                    Point[] points = { new Point(x, y), new Point(mirroredX, y), new Point(x, mirroredY), new Point(mirroredX, mirroredY) };
 
                     foreach (Point point in points)
                     {
