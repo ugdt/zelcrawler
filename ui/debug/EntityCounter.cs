@@ -12,15 +12,17 @@ public class EntityCounter : Label
     // {
         
     // }
-    private Node2D world;
+    private World World;
 
-    public override void _Ready() {
-        base._Ready();
-        world = GetNode("/root/Game") as Node2D;
+    public override void _Ready()
+    {
+        World = GetNode<World>("/root/Game/World");
     }
 
     //  // Called every frame. 'delta' is the elapsed time since the previous frame.
-  public override void _Process(float delta) {
-      Text = world.GetChildCount().ToString();
+  public override void _PhysicsProcess(float delta)
+  {
+      //Text = world.GetChildCount().ToString();
+      Text = $"Tiles Generated: {World.Tiles}";
   }
 }

@@ -19,10 +19,10 @@ __meta__ = {
 }
 
 [node name="FpsCounter" type="Label" parent="."]
-anchor_left = 0.8
-anchor_right = 0.8
-margin_right = 50.0
-margin_bottom = 25.0
+anchor_left = 0.763
+anchor_right = 0.763
+margin_left = -57.0
+margin_bottom = 41.0
 text = "fps"
 script = ExtResource( 2 )
 __meta__ = {
@@ -30,12 +30,13 @@ __meta__ = {
 }
 
 [node name="EntityCounter" type="Label" parent="."]
-anchor_left = 0.8
-anchor_right = 0.8
-margin_top = 24.4312
-margin_right = 80.0
-margin_bottom = 49.4312
-text = "entities"
+anchor_left = 0.839
+anchor_top = 0.032
+anchor_right = 0.839
+anchor_bottom = 0.129
+margin_left = -204.8
+margin_bottom = 41.0
+text = "tiles"
 script = ExtResource( 1 )
 __meta__ = {
 "_edit_use_anchors_": false
