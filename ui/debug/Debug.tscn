@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=2]
 
-[ext_resource path="res://ui/debug/EntityCounter.cs" type="Script" id=1]
+[ext_resource path="res://ui/debug/TileCounter.cs" type="Script" id=1]
 [ext_resource path="res://ui/debug/FpsCounter.cs" type="Script" id=2]
 [ext_resource path="res://ui/themes/MenuTheme.tres" type="Theme" id=3]
 [ext_resource path="res://ui/debug/Debug.cs" type="Script" id=4]
@@ -33,7 +33,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="EntityCounter" type="Label" parent="."]
+[node name="TileCounter" type="Label" parent="."]
 anchor_left = 0.797
 anchor_top = 0.1
 anchor_right = 1.006
