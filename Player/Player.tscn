@@ -4,7 +4,7 @@
 [ext_resource path="res://Player/Player.cs" type="Script" id=2]
 [ext_resource path="res://Player/PlayerAnim.tres" type="AnimationNodeStateMachine" id=3]
 [ext_resource path="res://Player/Sword.tscn" type="PackedScene" id=4]
-[ext_resource path="res://Player/Camera2D.cs" type="Script" id=5]
+[ext_resource path="res://Player/PlayerCamera.cs" type="Script" id=5]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 6.09004, 6.80761 )
@@ -194,6 +194,6 @@ parameters/AnimationNodeStateMachine/Idle/blend_position = Vector2( 0, 0 )
 parameters/AnimationNodeStateMachine/Running/blend_position = Vector2( 0, 0 )
 parameters/TimeScale/scale = 1.0
 
-[node name="Camera2D" type="Camera2D" parent="."]
+[node name="PlayerCamera" type="Camera2D" parent="."]
 current = true
 script = ExtResource( 5 )

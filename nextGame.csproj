@@ -58,8 +58,8 @@
   <ItemGroup>
     <Compile Include="Game.cs" />
     <Compile Include="MapPreview.cs" />
-    <Compile Include="Player\Camera2D.cs" />
     <Compile Include="Player\Player.cs" />
+    <Compile Include="Player\PlayerCamera.cs" />
     <Compile Include="Player\Sword.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ui\debug\Debug.cs" />
