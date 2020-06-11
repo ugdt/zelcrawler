@@ -14,8 +14,6 @@ public class PlayerCamera : Camera2D
         _step = new Vector2(Step, Step);
         _min = new Vector2(Min, Min);
         _max = new Vector2(Max, Max);
-        
-        GD.Print("Test");
     }
 
     public override void _Input(InputEvent e)
