@@ -5,8 +5,7 @@ using System.Drawing;
 public class World : Node2D
 {
     // Tree nodes
-    Player Player;
-    TileMap WorldMap;
+    private TileMap WorldMap;
 
     // Data
     private int RADIUS = 10;
@@ -19,33 +18,8 @@ public class World : Node2D
     [Export] private float Persistence = 0.5f;
     [Export] private float Lacunarity = 2f;
 
-    public float MapPeriod {
-        get { return Period; }
-    }
-
-    public int MapOctaves {
-        get { return Octaves; }
-    }
-
-    public float MapPersistence {
-        get { return Persistence; }
-    }
-
-    public float MapLacunarity {
-        get { return Lacunarity; }
-    }
-
-    public int MapSeed {
-        get { return noise.Seed; }
-    }
-
-    public int Tiles {
-        get { return tiles; }
-    }
-
     public override void _Ready()
     {
-        Player = GetNode<Player>("Entities/Player");
         WorldMap = GetNode<TileMap>("WorldMap");
 
         Random random = new Random();
@@ -59,24 +33,36 @@ public class World : Node2D
 
     public override void _PhysicsProcess(float delta)
     {
-        generateTiles(WorldMap.WorldToMap(Player.Position));
+        // generateTilesAroundPlayer(WorldMap.WorldToMap(Position));
     }
+    
+    public override void _Input(InputEvent e) {
+            if (e.IsActionPressed("fullscreen"))
+            {
+                OS.WindowFullscreen = !OS.WindowFullscreen;
+            }
+        }
+    
+    public void _on_moved(int x, int y, int radius)
+        {
+            generateTiles(new Point(x, y), radius);
+        }
 
-    public void generateTiles(Vector2 position)
+    public void generateTiles(Point position, int radius)
     {
-        Point originalPoint = new Point((int) position.x, (int) position.y);
         Vector2 tileCoord = Vector2.Zero;
 
-        for (int x = (originalPoint.X - RADIUS); x <= originalPoint.X; x++)
-        {
-            for (int y = (originalPoint.Y - RADIUS); y <= originalPoint.Y; y++)
-            {
-                if (((x - originalPoint.X) * (x - originalPoint.X)) + ((y - originalPoint.Y) * (y - originalPoint.Y)) <= (RADIUS * RADIUS))
-                {
-                    int mirroredX = originalPoint.X - (x - originalPoint.X);
-                    int mirroredY = originalPoint.Y - (y - originalPoint.Y);
 
-                    Point[] points = { new Point(x, y), new Point(mirroredX, y), new Point(x, mirroredY), new Point(mirroredX, mirroredY) };
+        for (int x = (position.X - radius); x <= position.X; x++)
+        {
+            for (int y = (position.Y - radius); y <= position.Y; y++)
+            {
+                if (((x - position.X) * (x - position.X)) + ((y - position.Y) * (y - position.Y)) <= (radius * radius))
+                {
+                    int xSym = position.X - (x - position.X);
+                    int ySym = position.Y - (y - position.Y);
+
+                    Point[] points = { new Point(x, y), new Point(xSym, y), new Point(x, ySym), new Point(xSym, ySym) };
 
                     foreach (Point point in points)
                     {
@@ -101,6 +87,30 @@ public class World : Node2D
                 }
             }
         }
-
     }
+    
+    
+    public float MapPeriod {
+            get { return Period; }
+        }
+    
+        public int MapOctaves {
+            get { return Octaves; }
+        }
+    
+        public float MapPersistence {
+            get { return Persistence; }
+        }
+    
+        public float MapLacunarity {
+            get { return Lacunarity; }
+        }
+    
+        public int MapSeed {
+            get { return noise.Seed; }
+        }
+    
+        public int Tiles {
+            get { return tiles; }
+        }
 }
