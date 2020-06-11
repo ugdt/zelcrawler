@@ -67,7 +67,6 @@ public class World : Node2D
         Point originalPoint = new Point((int) position.x, (int) position.y);
         Vector2 tileCoord = Vector2.Zero;
 
-
         for (int x = (originalPoint.X - RADIUS); x <= originalPoint.X; x++)
         {
             for (int y = (originalPoint.Y - RADIUS); y <= originalPoint.Y; y++)
@@ -102,5 +101,6 @@ public class World : Node2D
                 }
             }
         }
+
     }
 }
