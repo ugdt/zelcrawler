@@ -19,14 +19,14 @@ __meta__ = {
 }
 
 [node name="FpsCounter" type="Label" parent="."]
-anchor_left = 0.797
+anchor_left = 0.65
 anchor_top = 0.023
 anchor_right = 1.0
 anchor_bottom = 0.083
 margin_left = -0.0400391
 margin_top = -0.14
 margin_right = -3.05176e-05
-margin_bottom = 0.0600004
+margin_bottom = 0.0600014
 text = "fps"
 script = ExtResource( 2 )
 __meta__ = {
@@ -34,14 +34,14 @@ __meta__ = {
 }
 
 [node name="TileCounter" type="Label" parent="."]
-anchor_left = 0.797
+anchor_left = 0.65
 anchor_top = 0.1
 anchor_right = 1.006
 anchor_bottom = 0.161
 margin_left = -0.0400391
 margin_top = 1.90735e-06
 margin_right = 0.0799561
-margin_bottom = 0.0200005
+margin_bottom = 0.0200024
 text = "tiles"
 script = ExtResource( 1 )
 __meta__ = {
