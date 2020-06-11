@@ -1,5 +1,6 @@
 using Godot;
 using System;
+using System.Drawing;
 using static PDirection;
 
 public enum PDirection {
@@ -11,13 +12,18 @@ public enum PDirection {
 
 public class Player : KinematicBody2D
 {
+    [Signal] public delegate void moved(int x, int y, int radius);
+    
     [Export] private int MaxSpeed = 75;
     [Export] private int Acceleration = 500;
     [Export] private int Friction = 500;
+    [Export] private int Radius = 15;
 
     private float CurrentSpeed = 0;
     private Vector2 Velocity = Vector2.Zero;
     private bool IsMoving = false;
+    private bool movedTile = false;
+    private Point lastTile;
     private PDirection PlayerDirection = Right;
 
     private AnimationTree ATree;
@@ -29,6 +35,7 @@ public class Player : KinematicBody2D
         ATree = GetNode<AnimationTree>("AnimationTree");
         _Sword = GetNode<Sword>("Sword");
         ATreePlayback = (AnimationNodeStateMachinePlayback) ATree.Get("parameters/AnimationNodeStateMachine/playback");
+        lastTile = new Point(1, 1);
     }
 
     private Vector2 GetInput(float delta)
@@ -134,6 +141,13 @@ public class Player : KinematicBody2D
                     break;
             }
         }
+
+        var tile = GetTile();
+        if (tile != lastTile)
+        {
+            EmitSignal("moved", tile.X, tile.Y, Radius);
+        }
+        lastTile = tile;
     }
 
     public override void _Input(InputEvent @event)
@@ -142,5 +156,10 @@ public class Player : KinematicBody2D
         {
             _Sword.Swing();
         }
+    }
+
+    private Point GetTile()
+    {
+        return new Point((int) Position.x / 16, (int) Position.y /16);
     }
 }

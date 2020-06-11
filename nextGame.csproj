@@ -56,15 +56,18 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Camera2D.cs" />
     <Compile Include="Game.cs" />
     <Compile Include="MapPreview.cs" />
     <Compile Include="Player\Player.cs" />
+    <Compile Include="Player\PlayerCamera.cs" />
     <Compile Include="Player\Sword.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ui\debug\Debug.cs" />
-    <Compile Include="ui\debug\FpsCounter.cs" />
+    <Compile Include="ui\debug\EntityCounter.cs" />
     <Compile Include="ui\debug\TileCounter.cs" />
+    <Compile Include="ui\debug\FpsCounter.cs" />
+    <Compile Include="ui\mainmenu\MainMenuUi.cs" />
+    <Compile Include="ui\mainmenu\PanningCamera.cs" />
     <Compile Include="World.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
