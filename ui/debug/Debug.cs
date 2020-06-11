@@ -6,7 +6,7 @@ public class Debug : Control {
         Visible = false;
     }
 
-    public override void _UnhandledInput(InputEvent e) {
+    public override void _Input(InputEvent e) {
         if (e.IsActionReleased("show_debug")) {
             Visible = !Visible;
         }
