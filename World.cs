@@ -52,16 +52,17 @@ public class World : Node2D
     {
         Vector2 tileCoord = Vector2.Zero;
 
-        for (int x = (position.X - radius); x <= position.Y; x++)
+
+        for (int x = (position.X - radius); x <= position.X; x++)
         {
             for (int y = (position.Y - radius); y <= position.Y; y++)
             {
                 if (((x - position.X) * (x - position.X)) + ((y - position.Y) * (y - position.Y)) <= (radius * radius))
                 {
-                    int mirroredX = position.X - (x - position.X);
-                    int mirroredY = position.Y - (y - position.Y);
+                    int xSym = position.X - (x - position.X);
+                    int ySym = position.Y - (y - position.Y);
 
-                    Point[] points = { new Point(x, y), new Point(mirroredX, y), new Point(x, mirroredY), new Point(mirroredX, mirroredY) };
+                    Point[] points = { new Point(x, y), new Point(xSym, y), new Point(x, ySym), new Point(xSym, ySym) };
 
                     foreach (Point point in points)
                     {
@@ -87,6 +88,7 @@ public class World : Node2D
             }
         }
     }
+    
     
     public float MapPeriod {
             get { return Period; }

@@ -1,6 +1,5 @@
 using Godot;
 using System;
-using System.Diagnostics;
 using System.Drawing;
 
 public class PanningCamera : Camera2D
