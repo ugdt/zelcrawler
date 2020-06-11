@@ -8,17 +8,16 @@ public class World : Node2D
     private TileMap WorldMap;
 
     // Data
-    private int tiles = 0;
+    private int RADIUS = 10;
     private OpenSimplexNoise noise = new OpenSimplexNoise();
+    private int tiles = 0;
 
-    [Export] private int RADIUS = 10;
     // World Gen Config
     [Export] private float Period = 10f;
     [Export] private int Octaves = 3;
     [Export] private float Persistence = 0.5f;
     [Export] private float Lacunarity = 2f;
 
-    
     public override void _Ready()
     {
         WorldMap = GetNode<TileMap>("WorldMap");
@@ -43,27 +42,26 @@ public class World : Node2D
                 OS.WindowFullscreen = !OS.WindowFullscreen;
             }
         }
-
+    
     public void _on_moved(int x, int y, int radius)
-    {
-        generateTilesAroundPoint(new Point(x, y), radius);
-    }
+        {
+            generateTiles(new Point(x, y), radius);
+        }
 
-    public void generateTilesAroundPoint(Point position, int radius)
+    public void generateTiles(Point position, int radius)
     {
         Vector2 tileCoord = Vector2.Zero;
 
-
-        for (int x = (position.X - radius); x <= position.X; x++)
+        for (int x = (position.X - radius); x <= position.Y; x++)
         {
             for (int y = (position.Y - radius); y <= position.Y; y++)
             {
                 if (((x - position.X) * (x - position.X)) + ((y - position.Y) * (y - position.Y)) <= (radius * radius))
                 {
-                    int xSym = position.X - (x - position.X);
-                    int ySym = position.Y - (y - position.Y);
+                    int mirroredX = position.X - (x - position.X);
+                    int mirroredY = position.Y - (y - position.Y);
 
-                    Point[] points = { new Point(x, y), new Point(xSym, y), new Point(x, ySym), new Point(xSym, ySym) };
+                    Point[] points = { new Point(x, y), new Point(mirroredX, y), new Point(x, mirroredY), new Point(mirroredX, mirroredY) };
 
                     foreach (Point point in points)
                     {
