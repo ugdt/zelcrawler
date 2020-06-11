@@ -12,6 +12,6 @@ public class TileCounter : Label
 
   public override void _PhysicsProcess(float delta)
   {
-      Text = $"Tiles Generated: {World.Tiles}";
+      Text = $"Tiles {World.Tiles}";
   }
 }
