@@ -11,10 +11,7 @@ public class Sword : KinematicBody2D
 
     public bool Swinging
     {
-        get
-        {
-            return (ACollisionPlaying || ASpritePlaying);
-        }
+        get { return (ACollisionPlaying || ASpritePlaying); }
     }
 
     public override void _Ready()

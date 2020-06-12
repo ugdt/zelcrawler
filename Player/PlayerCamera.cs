@@ -8,7 +8,7 @@ public class PlayerCamera : Camera2D
     [Export] private float Max = 10f;
 
     private Vector2 _step, _min, _max = Vector2.Zero;
-    
+
     public override void _Ready()
     {
         _step = new Vector2(Step, Step);
@@ -20,26 +20,27 @@ public class PlayerCamera : Camera2D
     {
         // if (Current)
         // {
-            if (e.IsActionReleased("zoom_in"))
+        if (e.IsActionReleased("zoom_in"))
+        {
+            if (Zoom - _step >= _min)
             {
-                if (Zoom - _step >= _min)
-                {
-                    Zoom -= _step;
-                }
+                Zoom -= _step;
             }
+        }
 
-            if (e.IsActionReleased("zoom_out"))
+        if (e.IsActionReleased("zoom_out"))
+        {
+            if (Zoom + _step < _max)
             {
-                if (Zoom + _step < _max)
-                {
-                    Zoom += _step;
-                }
+                Zoom += _step;
             }
+        }
 
-            if (e.IsActionPressed("zoom_reset"))
-            {
-                Zoom = Vector2.One;
-            }
+        if (e.IsActionPressed("zoom_reset"))
+        {
+            Zoom = Vector2.One;
+        }
+
         // }
     }
 }

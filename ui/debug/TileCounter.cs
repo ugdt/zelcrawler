@@ -10,8 +10,8 @@ public class TileCounter : Label
         World = GetNode<World>("/root/Game/World");
     }
 
-  public override void _PhysicsProcess(float delta)
-  {
-      Text = $"Tiles {World.Tiles}";
-  }
+    public override void _PhysicsProcess(float delta)
+    {
+        Text = $"Tiles {World.Tiles}";
+    }
 }
