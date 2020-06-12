@@ -3,17 +3,11 @@ using System;
 using System.Drawing;
 using static PDirection;
 
-public enum PDirection {
-    Up,
-    Down,
-    Left,
-    Right
-}
-
 public class Player : KinematicBody2D
 {
-    [Signal] public delegate void moved(int x, int y, int radius);
-    
+    [Signal]
+    public delegate void moved(int x, int y, int radius);
+
     [Export] private int MaxSpeed = 75;
     [Export] private int Acceleration = 500;
     [Export] private int Friction = 500;
@@ -22,18 +16,17 @@ public class Player : KinematicBody2D
     private float CurrentSpeed = 0;
     private Vector2 Velocity = Vector2.Zero;
     private bool IsMoving = false;
-    private bool movedTile = false;
     private Point lastTile;
     private PDirection PlayerDirection = Right;
 
     private AnimationTree ATree;
     private AnimationNodeStateMachinePlayback ATreePlayback;
-    private Sword _Sword;
+    private Sword Sword;
 
     public override void _Ready()
     {
         ATree = GetNode<AnimationTree>("AnimationTree");
-        _Sword = GetNode<Sword>("Sword");
+        Sword = GetNode<Sword>("Sword");
         ATreePlayback = (AnimationNodeStateMachinePlayback) ATree.Get("parameters/AnimationNodeStateMachine/playback");
         lastTile = new Point(1, 1);
     }
@@ -42,7 +35,7 @@ public class Player : KinematicBody2D
     {
         Vector2 inputVelocity = Vector2.Zero;
 
-        if (! _Sword.Swinging)
+        if (!Sword.Swinging)
         {
             inputVelocity.x = Input.GetActionStrength("right") - Input.GetActionStrength("left");
             inputVelocity.y = Input.GetActionStrength("down") - Input.GetActionStrength("up");
@@ -60,7 +53,7 @@ public class Player : KinematicBody2D
         }
 
 
-        if (IsMoving) 
+        if (IsMoving)
         {
             ATreePlayback.Travel("Running");
             ATree.Set("parameters/AnimationNodeStateMachine/Idle/blend_position", inputVelocity);
@@ -116,28 +109,27 @@ public class Player : KinematicBody2D
 
         if (IsMoving)
         {
-            
         }
 
-        if (! _Sword.Swinging)
+        if (!Sword.Swinging)
         {
-            switch (PlayerDirection) 
+            switch (PlayerDirection)
             {
                 case Up:
-                    _Sword.Rotation = 0f;
-                    _Sword.Position = new Vector2(0, -15);
+                    Sword.Rotation = 0f;
+                    Sword.Position = new Vector2(0, -15);
                     break;
                 case Down:
-                    _Sword.Rotation = Convert.ToSingle(Math.PI);
-                    _Sword.Position = new Vector2(0, 15);
+                    Sword.Rotation = Convert.ToSingle(Math.PI);
+                    Sword.Position = new Vector2(0, 15);
                     break;
                 case Left:
-                    _Sword.Rotation = Convert.ToSingle((3 * Math.PI) / 2);
-                    _Sword.Position = new Vector2(-16, -5);
+                    Sword.Rotation = Convert.ToSingle((3 * Math.PI) / 2);
+                    Sword.Position = new Vector2(-16, -5);
                     break;
                 case Right:
-                    _Sword.Rotation = Convert.ToSingle((Math.PI) / 2d);
-                    _Sword.Position = new Vector2(16, -5);
+                    Sword.Rotation = Convert.ToSingle((Math.PI) / 2d);
+                    Sword.Position = new Vector2(16, -5);
                     break;
             }
         }
@@ -147,6 +139,7 @@ public class Player : KinematicBody2D
         {
             EmitSignal("moved", tile.X, tile.Y, Radius);
         }
+
         lastTile = tile;
     }
 
@@ -154,12 +147,12 @@ public class Player : KinematicBody2D
     {
         if (@event.IsActionPressed("slash"))
         {
-            _Sword.Swing();
+            Sword.Swing();
         }
     }
 
     private Point GetTile()
     {
-        return new Point((int) Position.x / 16, (int) Position.y /16);
+        return new Point((int) Position.x / 16, (int) Position.y / 16);
     }
 }
