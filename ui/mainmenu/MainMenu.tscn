@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=2]
 
-[ext_resource path="res://level/Level.tscn" type="PackedScene" id=1]
+[ext_resource path="res://world/Level.tscn" type="PackedScene" id=1]
 [ext_resource path="res://ui/mainmenu/MainMenuUi.tscn" type="PackedScene" id=2]
 [ext_resource path="res://ui/mainmenu/PanningCamera.cs" type="Script" id=3]
 
@@ -15,4 +15,6 @@ script = ExtResource( 3 )
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
 [node name="MainMenuUI" parent="CanvasLayer" instance=ExtResource( 2 )]
+margin_top = -0.27739
+margin_bottom = -0.27739
 [connection signal="moved" from="PanningCamera" to="Level" method="_on_moved"]
