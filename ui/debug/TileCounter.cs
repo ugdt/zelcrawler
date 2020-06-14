@@ -3,15 +3,15 @@ using System;
 
 public class TileCounter : Label
 {
-    private World World;
+    private Level Level;
 
     public override void _Ready()
     {
-        World = GetNode<World>("/root/Game/World");
+        Level = GetNode<Level>("/root/Game/Level");
     }
 
     public override void _PhysicsProcess(float delta)
     {
-        Text = $"Tiles {World.Tiles}";
+        Text = $"Tiles {Level.Tiles}";
     }
 }

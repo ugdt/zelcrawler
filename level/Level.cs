@@ -2,10 +2,10 @@ using Godot;
 using System;
 using System.Drawing;
 
-public class World : Node2D
+public class Level : Node2D
 {
     // Tree nodes
-    private TileMap WorldMap;
+    private TileMap LevelMap;
 
     // Data
     private readonly OpenSimplexNoise noise = new OpenSimplexNoise();
@@ -19,7 +19,7 @@ public class World : Node2D
 
     public override void _Ready()
     {
-        WorldMap = GetNode<TileMap>("WorldMap");
+        LevelMap = GetNode<TileMap>("LevelMap");
 
         Random random = new Random();
 
@@ -60,7 +60,7 @@ public class World : Node2D
 
                     foreach (Point point in points)
                     {
-                        if (WorldMap.GetCell(point.X, point.Y) == -1)
+                        if (LevelMap.GetCell(point.X, point.Y) == -1)
                         {
                             float noiseVal = noise.GetNoise2d(point.X, point.Y);
 
@@ -69,11 +69,11 @@ public class World : Node2D
 
                             if (noiseVal < 0.25f)
                             {
-                                WorldMap.SetCell(point.X, point.Y, 0, autotileCoord: tileCoords);
+                                LevelMap.SetCell(point.X, point.Y, 0, autotileCoord: tileCoords);
                             }
                             else
                             {
-                                WorldMap.SetCell(point.X, point.Y, 1, autotileCoord: tileCoords);
+                                LevelMap.SetCell(point.X, point.Y, 1, autotileCoord: tileCoords);
                             }
 
                             _tiles++;
@@ -86,7 +86,7 @@ public class World : Node2D
 
     public void GenerateTiles(Vector2 position, int radius)
     {
-        Vector2 positionOnMap = WorldMap.MapToWorld(position);
+        Vector2 positionOnMap = LevelMap.MapToWorld(position);
         Point point = new Point((int) positionOnMap.x, (int) positionOnMap.y);
     }
 
