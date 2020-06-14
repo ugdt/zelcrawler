@@ -3,20 +3,20 @@ using System;
 
 public class MapPreview : Sprite
 {
-    private World World;
+    private Level Level;
 
     public override void _Ready()
     {
-        World = GetNode<World>("/root/Game/World");
+        Level = GetNode<Level>("/root/Game/Level");
 
         NoiseTexture noiseTexture = (NoiseTexture) Texture;
         OpenSimplexNoise noise = noiseTexture.Noise;
 
-        noise.Period = World.MapPeriod;
-        noise.Octaves = World.MapOctaves;
-        noise.Persistence = World.MapPersistence;
-        noise.Lacunarity = World.MapLacunarity;
-        noise.Seed = World.MapSeed;
+        noise.Period = Level.MapPeriod;
+        noise.Octaves = Level.MapOctaves;
+        noise.Persistence = Level.MapPersistence;
+        noise.Lacunarity = Level.MapLacunarity;
+        noise.Seed = Level.MapSeed;
 
         noiseTexture.Noise = noise;
         Texture = noiseTexture;
