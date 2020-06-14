@@ -1,5 +1,6 @@
 using Godot;
 using System;
+using nextGame.world;
 
 public class TileCounter : Label
 {

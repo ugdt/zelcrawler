@@ -1,7 +1,8 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
-[ext_resource path="res://level/Level.tscn" type="PackedScene" id=1]
+[ext_resource path="res://world/Level.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Player/Player.tscn" type="PackedScene" id=2]
+[ext_resource path="res://levels/tutorial-island/tilesets/tutorial-island.tres" type="TileSet" id=3]
 [ext_resource path="res://ui/debug/Debug.tscn" type="PackedScene" id=4]
 
 [node name="Game" type="Node2D"]
@@ -16,4 +17,10 @@
 margin_left = -1.16632
 margin_right = -1.73511
 margin_bottom = -0.568848
+
+[node name="TileMap" type="TileMap" parent="."]
+tile_set = ExtResource( 3 )
+cell_size = Vector2( 16, 16 )
+format = 1
+tile_data = PoolIntArray( -196613, 0, 6, -196612, 0, 7, -196611, 0, 8, -131079, 0, 6, -131078, 0, 7, -131077, 0, 65539, -131076, 0, 65543, -131075, 0, 65544, -65544, 0, 6, -65543, 0, 65539, -65542, 0, 65543, -65541, 0, 65543, -65540, 0, 2, -65539, 0, 131080, -9, 0, 6, -8, 0, 65539, -7, 0, 65543, -6, 0, 65543, -5, 0, 65543, -4, 0, 65544, 65527, 0, 131078, 65528, 0, 3, 65529, 0, 65543, 65530, 0, 65543, 65531, 0, 65543, 65532, 0, 65544, 131064, 0, 131078, 131065, 0, 131079, 131066, 0, 131079, 131067, 0, 131079, 131068, 0, 0, 131069, 0, 7, 131070, 0, 7, 131071, 0, 7, 65536, 0, 8, 196604, 0, 65542, 196605, 0, 65543, 196606, 0, 65543, 196607, 0, 2, 131072, 0, 131080, 262140, 0, 65542, 262141, 0, 2, 262142, 0, 131079, 262143, 0, 131080, 327674, 0, 6, 327675, 0, 7, 327676, 0, 0, 327677, 0, 131080, 393210, 0, 65542, 393211, 0, 65543, 393212, 0, 65544, 458746, 0, 131078, 458747, 0, 131079, 458748, 0, 131080 )
 [connection signal="moved" from="Level/Player" to="Level" method="_on_moved"]
