@@ -1,5 +1,7 @@
 ﻿using System;
+using Godot;
 using Godot.Collections;
+using Object = Godot.Object;
 
 namespace nextGame.world
 {
@@ -18,5 +20,15 @@ namespace nextGame.world
         public string Name => name;
 
         public Dictionary Properties => properties;
+
+        public void AddProperty(String propertyName, Object value)
+        {
+            properties.Add(propertyName, value);
+        }
+
+        public object GetProperty(String propertyName)
+        {
+            return properties[propertyName];
+        }
     }
 }
