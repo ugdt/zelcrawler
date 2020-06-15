@@ -11,14 +11,12 @@ namespace nextGame.world
 
         // Data
         private readonly OpenSimplexNoise noise = new OpenSimplexNoise();
-        private static int _tiles = 0;
-
         // World Gen Config
         [Export] private float Period = 10f;
         [Export] private int Octaves = 3;
         [Export] private float Persistence = 0.5f;
         [Export] private float Lacunarity = 2f;
-
+        
         public override void _Ready()
         {
             LevelMap = GetNode<TileMap>("LevelMap");
@@ -43,6 +41,12 @@ namespace nextGame.world
         public void _on_moved(int x, int y, int radius)
         {
             GenerateTiles(new Point(x, y), radius);
+        }
+
+        public Tile GenerateTile()
+        {
+            // LevelMap.TileSet.GetTilesIds();
+            return null;
         }
 
         private void GenerateTiles(Point position, int radius)
