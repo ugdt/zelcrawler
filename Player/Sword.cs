@@ -1,56 +1,51 @@
 using Godot;
-using System;
 
-public class Sword : KinematicBody2D
+namespace nextGame.Player
 {
-    private AnimationPlayer CollisionAnimator;
-    private AnimationPlayer SpriteAnimator;
-
-    private bool ACollisionPlaying = false;
-    private bool ASpritePlaying = false;
-
-    public bool Swinging
+    public class Sword : KinematicBody2D
     {
-        get { return (ACollisionPlaying || ASpritePlaying); }
-    }
+        private bool ACollisionPlaying;
+        private bool ASpritePlaying;
+        private AnimationPlayer CollisionAnimator;
+        private AnimationPlayer SpriteAnimator;
 
-    public override void _Ready()
-    {
-        Visible = false;
-        CollisionAnimator = GetNode<AnimationPlayer>("CollisionAnimator");
-        SpriteAnimator = GetNode<AnimationPlayer>("SpriteAnimator");
+        public bool Swinging => ACollisionPlaying || ASpritePlaying;
 
-        CollisionAnimator.Connect("animation_finished", this, nameof(ACollisionFinished));
-        SpriteAnimator.Connect("animation_finished", this, nameof(ASpriteFinished));
-    }
-
-    public void ACollisionFinished(String animName)
-    {
-        ACollisionPlaying = false;
-        CollisionAnimator.Seek(0);
-    }
-
-    public void ASpriteFinished(String animName)
-    {
-        ASpritePlaying = false;
-        SpriteAnimator.Seek(0);
-
-        if (Visible)
+        public override void _Ready()
         {
             Visible = false;
+            CollisionAnimator = GetNode<AnimationPlayer>("CollisionAnimator");
+            SpriteAnimator = GetNode<AnimationPlayer>("SpriteAnimator");
+
+            CollisionAnimator.Connect("animation_finished", this, nameof(ACollisionFinished));
+            SpriteAnimator.Connect("animation_finished", this, nameof(ASpriteFinished));
         }
-    }
 
-    public void Swing()
-    {
-        if (!(ACollisionPlaying || ASpritePlaying))
+        public void ACollisionFinished(string animName)
         {
-            Visible = true;
-            ACollisionPlaying = true;
-            ASpritePlaying = true;
+            ACollisionPlaying = false;
+            CollisionAnimator.Seek(0);
+        }
 
-            CollisionAnimator.Play("SwordCollisionShapeMover");
-            SpriteAnimator.Play("slash");
+        public void ASpriteFinished(string animName)
+        {
+            ASpritePlaying = false;
+            SpriteAnimator.Seek(0);
+
+            if (Visible) Visible = false;
+        }
+
+        public void Swing()
+        {
+            if (!(ACollisionPlaying || ASpritePlaying))
+            {
+                Visible = true;
+                ACollisionPlaying = true;
+                ASpritePlaying = true;
+
+                CollisionAnimator.Play("SwordCollisionShapeMover");
+                SpriteAnimator.Play("slash");
+            }
         }
     }
 }

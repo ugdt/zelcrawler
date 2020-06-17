@@ -1,69 +1,70 @@
-using Godot;
 using System;
 using System.Drawing;
+using Godot;
 
-public class PanningCamera : Camera2D
+namespace nextGame.ui.mainmenu
 {
-    [Signal]
-    public delegate void moved(int x, int y, int radius);
-
-    [Export] public int Radius = 15;
-
-    private float speed = 16 * 2;
-    private readonly Random random = new Random();
-    private Vector2 nextTarget = Vector2.Zero;
-    private int timer = 0;
-    private const int Xmin = -10000;
-    private const int Ymin = -10000;
-    private const int Xmax = 10000;
-    private const int Ymax = 10000;
-
-    private Point lastTile;
-
-    public override void _Ready()
+    public class PanningCamera : Camera2D
     {
-        TransitionCamera();
-    }
+        [Signal]
+        public delegate void moved(int x, int y);
 
-    public override void _PhysicsProcess(float delta)
-    {
-        float physicsRate = 1 / delta;
+        private const int Xmin = 0;
+        private const int Ymin = 0;
+        private const int Xmax = 65536;
+        private const int Ymax = 65536;
+        private readonly Random random = new Random();
 
-        if (++timer > (physicsRate * 10))
+        private readonly float speed = 16 * 2;
+
+        private Point lastTile;
+        private Vector2 nextTarget = Vector2.Zero;
+
+        [Export] public int Radius = 15;
+        private int timer;
+
+        public override void _Ready()
         {
             TransitionCamera();
-            timer = 0;
         }
 
-        Position = Position.MoveToward(nextTarget, delta * speed);
-
-        Point tile = GetTile();
-        if (tile != lastTile)
+        public override void _PhysicsProcess(float delta)
         {
-            EmitSignal("moved", tile.X, tile.Y, Radius);
+            float physicsRate = 1 / delta;
+
+            if (++timer > physicsRate * 10)
+            {
+                TransitionCamera();
+                timer = 0;
+            }
+
+            Position = Position.MoveToward(nextTarget, delta * speed);
+
+            Point tile = GetTile();
+            if (tile != lastTile) EmitSignal("moved", tile.X, tile.Y);
+
+            lastTile = tile;
         }
 
-        lastTile = tile;
-    }
+        private Vector2 GetRandomTarget(int xmin, int xmax, int ymin, int ymax)
+        {
+            Vector2 possibleTarget = new Vector2(random.Next(xmin, xmax), random.Next(ymin, ymax));
 
-    private Vector2 GetRandomTarget(int xmin, int xmax, int ymin, int ymax)
-    {
-        var possibleTarget = new Vector2(random.Next(xmin, xmax), random.Next(ymin, ymax));
+            if (Position.DistanceTo(possibleTarget) > speed * timer)
+                return possibleTarget;
 
-        if (Position.DistanceTo(possibleTarget) > speed * timer)
-            return possibleTarget;
+            return GetRandomTarget(xmin, xmax, ymin, ymax);
+        }
 
-        return GetRandomTarget(xmin, xmax, ymin, ymax);
-    }
+        private void TransitionCamera()
+        {
+            Position = GetRandomTarget(Xmin + 640, Xmax - 640, Ymin + 360, Ymax - 360);
+            nextTarget = GetRandomTarget(Xmin, Xmax, Ymin, Ymax);
+        }
 
-    private void TransitionCamera()
-    {
-        Position = GetRandomTarget(Xmin + 640, Xmax - 640, Ymin + 360, Ymax - 360);
-        nextTarget = GetRandomTarget(Xmin, Xmax, Ymin, Ymax);
-    }
-
-    private Point GetTile()
-    {
-        return new Point((int) Position.x / 16, (int) Position.y / 16);
+        private Point GetTile()
+        {
+            return new Point((int) Position.x / 16, (int) Position.y / 16);
+        }
     }
 }
