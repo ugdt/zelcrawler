@@ -1,7 +1,10 @@
-﻿public enum PDirection
+﻿namespace nextGame.Player
 {
-    Up,
-    Down,
-    Left,
-    Right
+    public enum PDirection
+    {
+        Up,
+        Down,
+        Left,
+        Right
+    }
 }

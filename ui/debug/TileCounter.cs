@@ -1,18 +1,8 @@
 using Godot;
-using System;
-using nextGame.world;
 
-public class TileCounter : Label
+namespace nextGame.ui.debug
 {
-    private Level Level;
-
-    public override void _Ready()
+    public class TileCounter : Label
     {
-        Level = GetNode<Level>("/root/Game/Level");
-    }
-
-    public override void _PhysicsProcess(float delta)
-    {
-        Text = $"Tiles {Level.Tiles}";
     }
 }

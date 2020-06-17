@@ -17,4 +17,3 @@ script = ExtResource( 3 )
 [node name="MainMenuUI" parent="CanvasLayer" instance=ExtResource( 2 )]
 margin_top = -0.27739
 margin_bottom = -0.27739
-[connection signal="moved" from="PanningCamera" to="Level" method="_on_moved"]

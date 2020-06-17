@@ -1,22 +1,42 @@
-﻿namespace nextGame.world
+﻿using System.Collections.Generic;
+using Godot;
+using nextGame.levels;
+using nextGame.world.tiles;
+
+namespace nextGame.world
 {
     public class Chunk
     {
+        private readonly Level Level;
+        private readonly Vector2 MapPosition;
+        private readonly int Size;
+        private readonly Tile[,] Tiles;
 
-        private Tile[,] _tiles;
-        private Level _level;
-
-        public Chunk(int size, Level level)
+        public Chunk(int size, Level level, Vector2 mapPosition)
         {
-            _tiles = new Tile[size,size];
-            _level = level;
+            Tiles = new Tile[size, size];
+            Size = size;
+            Level = level;
+            MapPosition = mapPosition;
         }
 
-        private void generateChunk()
+        public Dictionary<Tile, Vector2> GetChunk()
         {
-            for (int i = 0; i < _tiles.Length; i++)
+            Dictionary<Tile, Vector2> tiles = new Dictionary<Tile, Vector2>(Size * Size);
+
+            for (int x = 0; x < Size; x++)
+            for (int y = 0; y < Size; y++)
             {
+                int mapX = (int) (x + MapPosition.x);
+                int mapY = (int) (y + MapPosition.y);
+
+                if (Tiles[x, y] == null) Tiles[x, y] = Level.GenerateTile(mapX, mapY);
+
+                Tile tile = Tiles[x, y];
+                tiles.Add(tile, new Vector2(mapX, mapY));
             }
+
+            return tiles;
         }
     }
 }

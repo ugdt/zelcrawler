@@ -1,18 +1,20 @@
 using Godot;
-using System;
-using nextGame.world;
+using World = nextGame.world.World;
 
-public class EntityCounter : Label
+namespace nextGame.ui.debug
 {
-    private Level Level;
-
-    public override void _Ready()
+    public class EntityCounter : Label
     {
-        Level = GetNode<Level>("/root/Game/Level");
-    }
+        private World World;
 
-    public override void _PhysicsProcess(float delta)
-    {
-        Text = $"Tiles Generated: {Level.Tiles}";
+        public override void _Ready()
+        {
+            World = GetNode<World>("/root/Game/World");
+        }
+
+        public override void _PhysicsProcess(float delta)
+        {
+            Text = $"Tiles Generated: {World.Tiles}";
+        }
     }
 }
