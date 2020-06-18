@@ -1,8 +1,10 @@
-﻿namespace nextGame.world.tiles
+﻿using Godot;
+
+namespace nextGame.world.tiles
 {
     public class DirtTile : Tile
     {
-        public DirtTile() : base(1)
+        public DirtTile(Vector2 tileCoordinate) : base(1, tileCoordinate)
         {
         }
     }

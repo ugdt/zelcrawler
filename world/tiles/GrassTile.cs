@@ -1,8 +1,10 @@
-﻿namespace nextGame.world.tiles
+﻿using Godot;
+
+namespace nextGame.world.tiles
 {
     public class GrassTile : Tile
     {
-        public GrassTile() : base(0)
+        public GrassTile(Vector2 tileCoordinate) : base(0, tileCoordinate)
         {
         }
     }

@@ -1,4 +1,6 @@
-﻿using nextGame.world.tiles;
+﻿using System;
+using Godot;
+using nextGame.world.tiles;
 
 namespace nextGame.levels
 {
@@ -7,10 +9,12 @@ namespace nextGame.levels
         public override Tile GenerateTile(int x, int y)
         {
             float noiseVal = Noise.GetNoise2d(x, y);
+            int tileCoordIndex = (int) Math.Round((noiseVal + 1) * 2.5);
+            Vector2 tileCoord = new Vector2(tileCoordIndex, 0);
 
-            if (noiseVal < 0.25f) return new GrassTile();
+            if (noiseVal > -0.25f) return new GrassTile(tileCoord);
 
-            return new DirtTile();
+            return new DirtTile(tileCoord);
         }
     }
 }
