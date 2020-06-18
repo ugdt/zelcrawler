@@ -7,31 +7,24 @@ using nextGame.world.tiles;
 
 namespace nextGame.world
 {
-    public class World
+    public class World : Node2D
     {
-        private readonly Chunk[,] Chunks;
-        private readonly int ChunkSideLength = 16;
-        private readonly Level DefaultLevel;
-
         private readonly List<Chunk> LoadedChunks = new List<Chunk>(50);
-        private readonly int WorldSize = 4096;
+        private Chunk[,] Chunks;
 
-        public World(Level defaultLevel, TileMap tileMap = null)
+        [Export] private int ChunkSideLength = 16;
+        private Level CurrentLevel;
+        private TileMap WorldMap;
+        [Export] private int WorldSize = 4096;
+
+        public int GeneratedTiles { get; private set; }
+
+        public override void _Ready()
         {
             Chunks = new Chunk[WorldSize, WorldSize];
-
-
-            TileMap = new TileMap
-            {
-                Position = Vector2.Zero, CellSize = new Vector2(16, 16), TileSet = defaultLevel.TileSet
-            };
-
-            DefaultLevel = defaultLevel;
+            WorldMap = GetNode<TileMap>("WorldMap");
+            CurrentLevel = new TutorialLevel();
         }
-
-        public int Tiles { get; } = 0;
-
-        public TileMap TileMap { get; }
 
         private Vector2 GetChunkPos(float x, float y)
         {
@@ -40,7 +33,7 @@ namespace nextGame.world
 
         private Vector2 GetChunkPos(Vector2 worldPosition)
         {
-            Vector2 mapPosition = TileMap.WorldToMap(worldPosition);
+            Vector2 mapPosition = WorldMap.WorldToMap(worldPosition);
 
             float chunkX = (float) Math.Floor(mapPosition.x / ChunkSideLength);
             float chunkY = (float) Math.Floor(mapPosition.y / ChunkSideLength);
@@ -56,16 +49,9 @@ namespace nextGame.world
             return new Vector2(mapX, mapY);
         }
 
-        private Vector2 ChunkPosToWorld(Vector2 chunkPosition)
+        public void GenerateChunks(int worldX, int worldY)
         {
-            Vector2 worldPosition = TileMap.MapToWorld(ChunkPosToMap(chunkPosition));
-
-            return worldPosition;
-        }
-
-        public void GenerateChunks(int x, int y)
-        {
-            Vector2 chunkPos = GetChunkPos(x, y);
+            Vector2 chunkPos = GetChunkPos(worldX, worldY);
             Chunk[] chunksAround = GetChunksAround((int) chunkPos.x, (int) chunkPos.y);
 
             Chunk[] chunksToGenerate = chunksAround.Except(LoadedChunks).ToArray();
@@ -104,12 +90,13 @@ namespace nextGame.world
 
         private void PlaceTile(Tile tile, int mapX, int mapY)
         {
-            TileMap.SetCell(mapX, mapY, tile.TileId);
+            WorldMap.SetCell(mapX, mapY, tile.TileId);
+            GeneratedTiles++;
         }
 
         private void RemoveTile(int mapX, int mapY)
         {
-            TileMap.SetCell(mapX, mapY, -1);
+            WorldMap.SetCell(mapX, mapY, -1);
         }
 
         private Chunk[] GetChunksAround(int x, int y)
@@ -121,13 +108,18 @@ namespace nextGame.world
                 if (xRound >= 0 && xRound < WorldSize && yRound >= 0 && yRound < WorldSize)
                 {
                     if (Chunks[xRound, yRound] == null)
-                        Chunks[xRound, yRound] = new Chunk(ChunkSideLength, DefaultLevel,
+                        Chunks[xRound, yRound] = new Chunk(ChunkSideLength, CurrentLevel,
                             ChunkPosToMap(new Vector2(xRound, yRound)));
 
                     chunksAround.Add(Chunks[xRound, yRound]);
                 }
 
             return chunksAround.ToArray();
+        }
+
+        public void _moved(int worldX, int worldY)
+        {
+            GenerateChunks(worldX, worldY);
         }
     }
 }

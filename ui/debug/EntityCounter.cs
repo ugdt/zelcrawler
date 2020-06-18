@@ -14,7 +14,7 @@ namespace nextGame.ui.debug
 
         public override void _PhysicsProcess(float delta)
         {
-            Text = $"Tiles Generated: {World.Tiles}";
+            Text = $"Tiles Generated: {World.GeneratedTiles}";
         }
     }
 }
