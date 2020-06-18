@@ -17,7 +17,7 @@ namespace nextGame.Player
         private float CurrentSpeed;
         [Export] private int Friction = 500;
         private bool IsMoving;
-        private Vector2 lastPosition;
+        private Vector2 lastPosition = Vector2.Zero;
 
         [Export] private int MaxSpeed = 75;
         private PDirection PlayerDirection = Right;
@@ -114,8 +114,11 @@ namespace nextGame.Player
                         break;
                 }
 
-            if (Position != lastPosition) EmitSignal("moved", (int) Position.x, (int) Position.y);
-            lastPosition = Position;
+            if ((Position - lastPosition).Abs().LengthSquared() > 256)
+            {
+                EmitSignal("moved", Position.x, Position.y);
+                lastPosition = Position;
+            }
         }
 
         public override void _Input(InputEvent @event)

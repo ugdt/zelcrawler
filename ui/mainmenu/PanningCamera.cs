@@ -1,5 +1,4 @@
 using System;
-using System.Drawing;
 using Godot;
 
 namespace nextGame.ui.mainmenu
@@ -17,7 +16,7 @@ namespace nextGame.ui.mainmenu
 
         private readonly float speed = 16 * 2;
 
-        private Point lastTile;
+        private Vector2 lastPosition = Vector2.Zero;
         private Vector2 nextTarget = Vector2.Zero;
 
         [Export] public int Radius = 15;
@@ -40,10 +39,12 @@ namespace nextGame.ui.mainmenu
 
             Position = Position.MoveToward(nextTarget, delta * speed);
 
-            Point tile = GetTile();
-            if (tile != lastTile) EmitSignal("moved", tile.X, tile.Y);
 
-            lastTile = tile;
+            if ((Position - lastPosition).Abs().LengthSquared() > 256)
+            {
+                EmitSignal("moved", Position.x, Position.y);
+                lastPosition = Position;
+            }
         }
 
         private Vector2 GetRandomTarget(int xmin, int xmax, int ymin, int ymax)
@@ -60,11 +61,6 @@ namespace nextGame.ui.mainmenu
         {
             Position = GetRandomTarget(Xmin + 640, Xmax - 640, Ymin + 360, Ymax - 360);
             nextTarget = GetRandomTarget(Xmin, Xmax, Ymin, Ymax);
-        }
-
-        private Point GetTile()
-        {
-            return new Point((int) Position.x / 16, (int) Position.y / 16);
         }
     }
 }
