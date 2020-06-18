@@ -63,8 +63,5 @@
     <ItemGroup>
       <Folder Include=".mono" />
     </ItemGroup>
-    <ItemGroup>
-      <Content Include="world\Level.tscn" />
-    </ItemGroup>
     <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

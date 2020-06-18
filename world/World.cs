@@ -90,7 +90,7 @@ namespace nextGame.world
 
         private void PlaceTile(Tile tile, int mapX, int mapY)
         {
-            WorldMap.SetCell(mapX, mapY, tile.TileId);
+            WorldMap.SetCell(mapX, mapY, tile.TileId, autotileCoord: tile.TileCoordinate);
             GeneratedTiles++;
         }
 

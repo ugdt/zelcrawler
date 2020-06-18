@@ -1,12 +1,16 @@
-﻿namespace nextGame.world.tiles
+﻿using Godot;
+
+namespace nextGame.world.tiles
 {
     public abstract class Tile
     {
-        protected Tile(int tileId)
+        protected Tile(int tileId, Vector2 tileCoordinate)
         {
             TileId = tileId;
+            TileCoordinate = tileCoordinate;
         }
 
         public int TileId { get; }
+        public Vector2 TileCoordinate { get; }
     }
 }
