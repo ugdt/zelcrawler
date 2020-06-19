@@ -5,7 +5,7 @@ namespace nextGame.player
     public class PlayerCamera : Camera2D
     {
         private Vector2 _step, _min, _max = Vector2.Zero;
-        [Export] private float Max = 10f;
+        [Export] private float Max = 15f;
         [Export] private float Min = .5f;
         [Export] private float Step = 0.2f;
 
@@ -18,8 +18,6 @@ namespace nextGame.player
 
         public override void _Input(InputEvent e)
         {
-            // if (Current)
-            // {
             if (e.IsActionReleased("zoom_in"))
                 if (Zoom - _step >= _min)
                     Zoom -= _step;
@@ -29,8 +27,6 @@ namespace nextGame.player
                     Zoom += _step;
 
             if (e.IsActionPressed("zoom_reset")) Zoom = Vector2.One;
-
-            // }
         }
     }
 }
