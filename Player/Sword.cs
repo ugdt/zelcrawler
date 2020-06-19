@@ -1,6 +1,6 @@
 using Godot;
 
-namespace nextGame.Player
+namespace nextGame.player
 {
     public class Sword : KinematicBody2D
     {

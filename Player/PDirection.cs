@@ -1,4 +1,4 @@
-﻿namespace nextGame.Player
+﻿namespace nextGame.player
 {
     public enum PDirection
     {
