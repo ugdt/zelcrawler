@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
-namespace nextGame.world
+namespace zelcrawler.world
 {
     public class ChunkQueue
     {

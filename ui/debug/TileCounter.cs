@@ -1,14 +1,16 @@
 using Godot;
+using zelcrawler.world;
+using World = zelcrawler.world.World;
 
-namespace nextGame.ui.debug
+namespace zelcrawler.ui.debug
 {
     public class TileCounter : Label
     {
-        private nextGame.world.World _world;
+        private World _world;
 
         public override void _Ready()
         {
-            _world = GetNode<nextGame.world.World>("/root/Game/World");
+            _world = GetNode<World>("/root/Game/World");
         }
 
         public override void _PhysicsProcess(float delta)

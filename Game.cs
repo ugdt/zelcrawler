@@ -1,6 +1,6 @@
 using Godot;
 
-namespace nextGame
+namespace zelcrawler
 {
     public class Game : Node2D
     {

@@ -1,6 +1,6 @@
 using Godot;
 
-namespace nextGame.player
+namespace zelcrawler.player
 {
     public class PlayerCamera : Camera2D
     {

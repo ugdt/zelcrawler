@@ -6,8 +6,8 @@
     <ProjectGuid>{A92A568F-46A9-4150-9878-3E42C4A8BB53}</ProjectGuid>
     <OutputType>Library</OutputType>
     <OutputPath>.mono\temp\bin\$(Configuration)</OutputPath>
-    <RootNamespace>nextGame</RootNamespace>
-    <AssemblyName>nextGame</AssemblyName>
+    <RootNamespace>zelcrawler</RootNamespace>
+    <AssemblyName>zelcrawler</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <GodotProjectGeneratorVersion>1.0.7374.16792</GodotProjectGeneratorVersion>
     <BaseIntermediateOutputPath>.mono\temp\obj</BaseIntermediateOutputPath>

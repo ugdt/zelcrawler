@@ -1,4 +1,4 @@
-﻿namespace nextGame.levels
+﻿namespace zelcrawler.levels
 {
     public enum LevelEnum
     {

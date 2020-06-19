@@ -1,6 +1,6 @@
 using Godot;
 
-namespace nextGame.player
+namespace zelcrawler.player
 {
     public class Sword : KinematicBody2D
     {

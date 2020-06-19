@@ -1,6 +1,6 @@
 ﻿using Godot;
 
-namespace nextGame.world.tiles
+namespace zelcrawler.world.tiles
 {
     public class DirtTile : Tile
     {

@@ -4,7 +4,7 @@ using Godot;
 
 #endregion
 
-namespace nextGame.ui.debug
+namespace zelcrawler.ui.debug
 {
     public class Debug : Control
     {
