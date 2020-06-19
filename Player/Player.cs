@@ -1,8 +1,8 @@
 using System;
 using Godot;
-using static nextGame.Player.PDirection;
+using static nextGame.player.PDirection;
 
-namespace nextGame.Player
+namespace nextGame.player
 {
     public class Player : KinematicBody2D
     {

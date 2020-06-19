@@ -60,7 +60,7 @@
     <Compile Include="**/*.cs" />
   </ItemGroup>
   <ItemGroup>
-      <Folder Include=".mono" />
+    <Folder Include=".mono" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.NETFramework.ReferenceAssemblies">

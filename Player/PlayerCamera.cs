@@ -1,6 +1,6 @@
 using Godot;
 
-namespace nextGame.Player
+namespace nextGame.player
 {
     public class PlayerCamera : Camera2D
     {
