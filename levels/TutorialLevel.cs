@@ -9,12 +9,12 @@ namespace nextGame.levels
         public override Tile GenerateTile(int x, int y)
         {
             float noiseVal = Noise.GetNoise2d(x, y);
-            int tileCoordIndex = (int) Math.Round((noiseVal + 1) * 2.5);
-            Vector2 tileCoord = new Vector2(tileCoordIndex, 0);
+            int tileCoordinateIndex = (int) Math.Round((noiseVal + 1) * 2.5);
+            Vector2 tileCoordinate = new Vector2(tileCoordinateIndex, 0);
 
-            if (noiseVal > -0.25f) return new GrassTile(tileCoord);
+            if (noiseVal > -0.25f) return new GrassTile(tileCoordinate);
 
-            return new DirtTile(tileCoord);
+            return new DirtTile(tileCoordinate);
         }
     }
 }
