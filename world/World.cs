@@ -26,7 +26,7 @@ namespace nextGame.world
 			_chunks = new Chunk[_worldSize, _worldSize];
 			_worldMap = GetNode<TileMap>("WorldMap");
 			_currentLevel = new TutorialLevel();
-			_chunkQueue = new ChunkQueue(32);
+			_chunkQueue = new ChunkQueue(50);
 		}
 
 		private Vector2 GetChunkPos(float x, float y)
