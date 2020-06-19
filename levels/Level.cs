@@ -1,7 +1,7 @@
 ﻿using Godot;
-using nextGame.world.tiles;
+using zelcrawler.world.tiles;
 
-namespace nextGame.levels
+namespace zelcrawler.levels
 {
     public abstract class Level
     {

@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using Godot;
-using nextGame.levels;
-using nextGame.world.tiles;
+using zelcrawler.levels;
+using zelcrawler.world.tiles;
 
-namespace nextGame.world
+namespace zelcrawler.world
 {
 	public class World : Node2D
 	{

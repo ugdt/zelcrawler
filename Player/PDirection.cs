@@ -1,4 +1,4 @@
-﻿namespace nextGame.player
+﻿namespace zelcrawler.player
 {
     public enum PDirection
     {

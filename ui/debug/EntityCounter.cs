@@ -1,7 +1,7 @@
 using Godot;
-using World = nextGame.world.World;
+using World = zelcrawler.world.World;
 
-namespace nextGame.ui.debug
+namespace zelcrawler.ui.debug
 {
     public class EntityCounter : Label
     {

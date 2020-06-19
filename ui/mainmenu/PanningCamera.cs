@@ -1,7 +1,7 @@
 using System;
 using Godot;
 
-namespace nextGame.ui.mainmenu
+namespace zelcrawler.ui.mainmenu
 {
     public class PanningCamera : Camera2D
     {

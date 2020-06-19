@@ -1,6 +1,6 @@
 using Godot;
 
-namespace nextGame.ui.mainmenu
+namespace zelcrawler.ui.mainmenu
 {
     public class MainMenuUi : Control
     {

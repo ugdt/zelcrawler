@@ -1,6 +1,6 @@
 using Godot;
 
-namespace nextGame.ui.debug
+namespace zelcrawler.ui.debug
 {
     public class FpsCounter : Label
     {

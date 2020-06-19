@@ -1,4 +1,4 @@
-﻿namespace nextGame.world
+﻿namespace zelcrawler.world
 {
     public enum Property
     {

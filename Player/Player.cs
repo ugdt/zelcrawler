@@ -1,8 +1,8 @@
 using System;
 using Godot;
-using static nextGame.player.PDirection;
+using static zelcrawler.player.PDirection;
 
-namespace nextGame.player
+namespace zelcrawler.player
 {
     public class Player : KinematicBody2D
     {
