@@ -1,9 +1,8 @@
-[gd_scene load_steps=4 format=2]
+[gd_resource type="TileSet" load_steps=2 format=2]
 
 [ext_resource path="res://assets/tiny_dungeon_world.png" type="Texture" id=1]
-[ext_resource path="res://world/Level.cs" type="Script" id=2]
 
-[sub_resource type="TileSet" id=1]
+[resource]
 0/name = "grassAtlas"
 0/texture = ExtResource( 1 )
 0/tex_offset = Vector2( 0, 0 )
@@ -46,15 +45,3 @@
 1/shape_one_way_margin = 0.0
 1/shapes = [  ]
 1/z_index = 0
-
-[node name="Level" type="Node2D"]
-script = ExtResource( 2 )
-
-[node name="LevelMap" type="TileMap" parent="."]
-tile_set = SubResource( 1 )
-cell_size = Vector2( 16, 16 )
-collision_layer = 2
-collision_mask = 13
-format = 1
-
-[node name="Entities" type="YSort" parent="."]

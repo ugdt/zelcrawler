@@ -1,46 +1,32 @@
 using Godot;
-using System;
 
-public class PlayerCamera : Camera2D
+namespace zelcrawler.player
 {
-    [Export] private float Step = 0.2f;
-    [Export] private float Min = .5f;
-    [Export] private float Max = 10f;
-
-    private Vector2 _step, _min, _max = Vector2.Zero;
-
-    public override void _Ready()
+    public class PlayerCamera : Camera2D
     {
-        _step = new Vector2(Step, Step);
-        _min = new Vector2(Min, Min);
-        _max = new Vector2(Max, Max);
-    }
+        private Vector2 _step, _min, _max = Vector2.Zero;
+        [Export] private float Max = 15f;
+        [Export] private float Min = .5f;
+        [Export] private float Step = 0.2f;
 
-    public override void _Input(InputEvent e)
-    {
-        // if (Current)
-        // {
-        if (e.IsActionReleased("zoom_in"))
+        public override void _Ready()
         {
-            if (Zoom - _step >= _min)
-            {
-                Zoom -= _step;
-            }
+            _step = new Vector2(Step, Step);
+            _min = new Vector2(Min, Min);
+            _max = new Vector2(Max, Max);
         }
 
-        if (e.IsActionReleased("zoom_out"))
+        public override void _Input(InputEvent e)
         {
-            if (Zoom + _step < _max)
-            {
-                Zoom += _step;
-            }
-        }
+            if (e.IsActionReleased("zoom_in"))
+                if (Zoom - _step >= _min)
+                    Zoom -= _step;
 
-        if (e.IsActionPressed("zoom_reset"))
-        {
-            Zoom = Vector2.One;
-        }
+            if (e.IsActionReleased("zoom_out"))
+                if (Zoom + _step < _max)
+                    Zoom += _step;
 
-        // }
+            if (e.IsActionPressed("zoom_reset")) Zoom = Vector2.One;
+        }
     }
 }
