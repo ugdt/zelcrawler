@@ -12,44 +12,32 @@ namespace zelcrawler.world
 	{
 		private Level _currentLevel;
 		private TileMap _worldMap;
-		
+
+		[Export] private LevelEnum _defaultLevel = LevelEnum.Tutorial;
 		private ChunkQueue _chunkQueue;
 		private Chunk[,] _chunks;
 		[Export] private int _chunkSideLength = 16;
 		[Export] private int _worldSize = 16384;
 		private int DefaultRadius = 2;
 
-		public int GeneratedTiles { get; private set; } = 0;
+		public int GeneratedTiles { get; private set; }
 
 		public override void _Ready()
 		{
 			_chunks = new Chunk[_worldSize, _worldSize];
 			_worldMap = GetNode<TileMap>("WorldMap");
-			_currentLevel = new TutorialLevel();
+
+			switch (_defaultLevel)
+			{
+				case LevelEnum.Tutorial:
+					_currentLevel = new TutorialLevel();
+					break;
+				case LevelEnum.Desert:
+					_currentLevel = new DesertLevel();
+					break;
+			}
+			
 			_chunkQueue = new ChunkQueue(50);
-		}
-
-		private Vector2 GetChunkPos(float x, float y)
-		{
-			return GetChunkPos(new Vector2(x, y));
-		}
-
-		private Vector2 GetChunkPos(Vector2 worldPosition)
-		{
-			Vector2 mapPosition = _worldMap.WorldToMap(worldPosition);
-
-			float chunkX = (float) Math.Floor(mapPosition.x / _chunkSideLength);
-			float chunkY = (float) Math.Floor(mapPosition.y / _chunkSideLength);
-
-			return new Vector2(chunkX, chunkY);
-		}
-
-		private Vector2 ChunkPosToMap(Vector2 chunkPosition)
-		{
-			float mapX = chunkPosition.x * _chunkSideLength;
-			float mapY = chunkPosition.y * _chunkSideLength;
-
-			return new Vector2(mapX, mapY);
 		}
 
 		private void GenerateChunks(int worldX, int worldY, int radius)
@@ -84,12 +72,15 @@ namespace zelcrawler.world
 		{
 			bool unloadAChunk = _chunkQueue.Enqueue(chunk);
 			
-			Dictionary<Tile, Vector2> chunkTiles = chunk.GetChunk();
+			Tile[,] chunkTiles = chunk.GetTiles();
 
-			foreach (Tile tile in chunkTiles.Keys)
+			for (int x = 0; x < chunk.Size; x++)
+			for (int y = 0; y < chunk.Size; y++)
 			{
-				Vector2 tilePos = chunkTiles[tile];
-				PlaceTile(tile, (int) tilePos.x, (int) tilePos.y);
+				int mapX = (int) (x + chunk.MapPosition.x);
+				int mapY = (int) (y + chunk.MapPosition.y);
+
+				PlaceTile(chunkTiles[x, y], mapX, mapY);
 			}
 
 			if (unloadAChunk)
@@ -100,8 +91,14 @@ namespace zelcrawler.world
 
 		private void UnloadChunk(Chunk chunk)
 		{
-			Dictionary<Tile, Vector2> chunkTiles = chunk.GetChunk();
-			foreach (Vector2 tilePos in chunkTiles.Values) RemoveTile((int) tilePos.x, (int) tilePos.y);
+			for (int x = 0; x < chunk.Size; x++)
+			for (int y = 0; y < chunk.Size; y++)
+			{
+				int mapX = (int) (x + chunk.MapPosition.x);
+				int mapY = (int) (y + chunk.MapPosition.y);
+
+				RemoveTile(mapX, mapY);
+			}
 		}
 
 		private void PlaceTile(Tile tile, int mapX, int mapY)
@@ -132,6 +129,29 @@ namespace zelcrawler.world
 				}
 
 			return chunksAround.ToArray();
+		}
+		
+		private Vector2 GetChunkPos(float x, float y)
+		{
+			return GetChunkPos(new Vector2(x, y));
+		}
+
+		private Vector2 GetChunkPos(Vector2 worldPosition)
+		{
+			Vector2 mapPosition = _worldMap.WorldToMap(worldPosition);
+
+			float chunkX = (float) Math.Floor(mapPosition.x / _chunkSideLength);
+			float chunkY = (float) Math.Floor(mapPosition.y / _chunkSideLength);
+
+			return new Vector2(chunkX, chunkY);
+		}
+
+		private Vector2 ChunkPosToMap(Vector2 chunkPosition)
+		{
+			float mapX = chunkPosition.x * _chunkSideLength;
+			float mapY = chunkPosition.y * _chunkSideLength;
+
+			return new Vector2(mapX, mapY);
 		}
 
 		public void _moved(int worldX, int worldY, int radius = -1)

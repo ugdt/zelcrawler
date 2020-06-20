@@ -1,8 +1,4 @@
-#region
-
 using Godot;
-
-#endregion
 
 namespace zelcrawler.ui.debug
 {

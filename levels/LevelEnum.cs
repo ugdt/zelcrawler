@@ -2,7 +2,7 @@
 {
     public enum LevelEnum
     {
-        TutorialLevel,
-        DesertLevel
+        Tutorial,
+        Desert
     }
 }

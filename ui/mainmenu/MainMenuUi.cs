@@ -13,5 +13,11 @@ namespace zelcrawler.ui.mainmenu
         {
             GD.Print("There's no settings, play the game how we intended it noob.");
         }
+
+        // TODO: Andrew fix this
+        public override void _Input(InputEvent e)
+        {
+            if (e.IsActionPressed("fullscreen")) OS.WindowFullscreen = !OS.WindowFullscreen;
+        }
     }
 }
