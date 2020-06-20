@@ -1,6 +1,5 @@
 using System;
 using Godot;
-using static zelcrawler.player.PDirection;
 
 namespace zelcrawler.player
 {
@@ -21,7 +20,7 @@ namespace zelcrawler.player
         private Vector2 _lastPosition = Vector2.Zero;
 
         [Export] private int _maxSpeed = 75;
-        private PDirection _playerDirection = Right;
+        private Vector2 _playerDirection = Vector2.Zero;
         private Sword _sword;
         private Vector2 _velocity = Vector2.Zero;
 
@@ -50,7 +49,12 @@ namespace zelcrawler.player
             if (inputVelocity == Vector2.Zero)
                 _isMoving = false;
             else
+            {
                 _isMoving = true;
+                
+                if (inputVelocity.Abs() != Vector2.One)
+                    _playerDirection = inputVelocity.Round();
+            }
 
 
             if (_isMoving)
@@ -74,46 +78,37 @@ namespace zelcrawler.player
             _aTree.Set("parameter/playback", "Idle");
 
             _currentSpeed = 0;
-
+            
             return _velocity.MoveToward(Vector2.Zero, _friction * delta);
         }
 
         public override void _PhysicsProcess(float delta)
         {
-            if (Input.IsActionPressed("up")) _playerDirection = Up;
-
-            if (Input.IsActionPressed("down")) _playerDirection = Down;
-
-            if (Input.IsActionPressed("left")) _playerDirection = Left;
-
-            if (Input.IsActionPressed("right")) _playerDirection = Right;
-
             _velocity = MoveAndSlide(GetInput(delta));
-
-            if (_isMoving)
-            {
-            }
-
+            
             if (!_sword.Swinging)
-                switch (_playerDirection)
+            {
+                if (_playerDirection == Vector2.Up)
                 {
-                    case Up:
-                        _sword.Rotation = 0f;
-                        _sword.Position = new Vector2(0, -15);
-                        break;
-                    case Down:
-                        _sword.Rotation = Convert.ToSingle(Math.PI);
-                        _sword.Position = new Vector2(0, 15);
-                        break;
-                    case Left:
-                        _sword.Rotation = Convert.ToSingle(3 * Math.PI / 2);
-                        _sword.Position = new Vector2(-16, -5);
-                        break;
-                    case Right:
-                        _sword.Rotation = Convert.ToSingle(Math.PI / 2d);
-                        _sword.Position = new Vector2(16, -5);
-                        break;
+                    _sword.Rotation = 0f;
+                    _sword.Position = new Vector2(0, -15);
                 }
+                else if (_playerDirection == Vector2.Down)
+                {
+                    _sword.Rotation = Convert.ToSingle(Math.PI);
+                    _sword.Position = new Vector2(0, 15);
+                }
+                else if (_playerDirection == Vector2.Left)
+                {
+                    _sword.Rotation = Convert.ToSingle(3 * Math.PI / 2);
+                    _sword.Position = new Vector2(-16, -5);
+                }
+                else if (_playerDirection == Vector2.Right)
+                {
+                    _sword.Rotation = Convert.ToSingle(Math.PI / 2d);
+                    _sword.Position = new Vector2(16, -5);
+                }
+            }
 
             if ((Position - _lastPosition).Abs().LengthSquared() > 256)
             {
@@ -124,7 +119,11 @@ namespace zelcrawler.player
 
         public override void _Input(InputEvent @event)
         {
-            if (@event.IsActionPressed("slash")) _sword.Swing();
+            if (@event.IsActionPressed("slash"))
+            {
+                GD.Print(_playerDirection);
+                _sword.Swing();
+            }
         }
     }
 }

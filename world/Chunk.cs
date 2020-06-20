@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Godot;
 using zelcrawler.levels;
 using zelcrawler.world.tiles;
@@ -20,10 +21,8 @@ namespace zelcrawler.world
             _mapPosition = mapPosition;
         }
 
-        public Dictionary<Tile, Vector2> GetChunk()
+        public Tile[,] GetTiles()
         {
-            Dictionary<Tile, Vector2> tiles = new Dictionary<Tile, Vector2>(_size * _size);
-
             for (int x = 0; x < _size; x++)
             for (int y = 0; y < _size; y++)
             {
@@ -31,12 +30,12 @@ namespace zelcrawler.world
                 int mapY = (int) (y + _mapPosition.y);
 
                 if (_tiles[x, y] == null) _tiles[x, y] = _level.GenerateTile(mapX, mapY);
-
-                Tile tile = _tiles[x, y];
-                tiles.Add(tile, new Vector2(mapX, mapY));
             }
 
-            return tiles;
+            return _tiles;
         }
+
+        public Vector2 MapPosition => _mapPosition;
+        public int Size => _size;
     }
 }

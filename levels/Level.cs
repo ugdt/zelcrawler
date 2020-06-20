@@ -1,4 +1,5 @@
-﻿using Godot;
+﻿using System;
+using Godot;
 using zelcrawler.world.tiles;
 
 namespace zelcrawler.levels
@@ -7,8 +8,14 @@ namespace zelcrawler.levels
     {
         protected readonly OpenSimplexNoise Noise = new OpenSimplexNoise();
 
-        // World Gen Config
+        protected Level()
+        {
+            Noise.Seed = new Random().Next();
+        }
+        
+        public abstract Tile GenerateTile(int x, int y);
 
+        // World Gen Config
         public float MapPeriod { get; } = 10f;
 
         public int MapOctaves { get; } = 3;
@@ -18,7 +25,5 @@ namespace zelcrawler.levels
         public float MapLacunarity { get; } = 2f;
 
         public int MapSeed => Noise.Seed;
-        
-        public abstract Tile GenerateTile(int x, int y);
     }
 }
