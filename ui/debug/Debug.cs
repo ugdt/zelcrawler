@@ -1,18 +1,17 @@
 using Godot;
-using System;
 
-public class Debug : Control
+namespace zelcrawler.ui.debug
 {
-    public override void _Ready()
+    public class Debug : Control
     {
-        Visible = false;
-    }
-
-    public override void _Input(InputEvent e)
-    {
-        if (e.IsActionReleased("show_debug"))
+        public override void _Ready()
         {
-            Visible = !Visible;
+            Visible = false;
+        }
+
+        public override void _Input(InputEvent e)
+        {
+            if (e.IsActionReleased("show_debug")) Visible = !Visible;
         }
     }
 }

@@ -15,7 +15,7 @@ _global_script_class_icons={
 
 [application]
 
-config/name="nextGame"
+config/name="zelcrawler"
 run/main_scene="res://ui/mainmenu/MainMenu.tscn"
 config/icon="res://icon.png"
 
@@ -120,6 +120,7 @@ file_logging/max_log_files=5
 
 [rendering]
 
+quality/driver/driver_name="GLES2"
 quality/2d/use_pixel_snap=true
 environment/default_environment="res://default_env.tres"
 

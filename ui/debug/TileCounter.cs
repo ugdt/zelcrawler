@@ -1,18 +1,21 @@
 using Godot;
-using System;
-using nextGame.world;
+using zelcrawler.world;
+using World = zelcrawler.world.World;
 
-public class TileCounter : Label
+namespace zelcrawler.ui.debug
 {
-    private Level Level;
-
-    public override void _Ready()
+    public class TileCounter : Label
     {
-        Level = GetNode<Level>("/root/Game/Level");
-    }
+        private World _world;
 
-    public override void _PhysicsProcess(float delta)
-    {
-        Text = $"Tiles {Level.Tiles}";
+        public override void _Ready()
+        {
+            _world = GetNode<World>("/root/Game/World");
+        }
+
+        public override void _PhysicsProcess(float delta)
+        {
+            Text = $"Tiles Generated: {_world.GeneratedTiles}";
+        }
     }
 }
