@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using Godot;
+﻿using Godot;
 using zelcrawler.levels;
 using zelcrawler.world.tiles;
 

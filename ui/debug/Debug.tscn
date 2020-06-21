@@ -17,6 +17,7 @@ __meta__ = {
 anchor_left = 0.8
 anchor_right = 0.8
 anchor_bottom = 0.228
+margin_left = -50.0
 margin_bottom = -0.0400009
 custom_constants/separation = 0
 __meta__ = {
@@ -24,7 +25,7 @@ __meta__ = {
 }
 
 [node name="FpsCounter" type="Label" parent="VBoxContainer"]
-margin_right = 40.0
+margin_right = 50.0
 margin_bottom = 11.0
 text = "fps"
 script = ExtResource( 3 )
@@ -34,7 +35,7 @@ __meta__ = {
 
 [node name="EntityCounter" type="Label" parent="VBoxContainer"]
 margin_top = 11.0
-margin_right = 40.0
+margin_right = 50.0
 margin_bottom = 22.0
 text = "entities"
 __meta__ = {
@@ -43,7 +44,7 @@ __meta__ = {
 
 [node name="TileCounter" type="Label" parent="VBoxContainer"]
 margin_top = 22.0
-margin_right = 40.0
+margin_right = 50.0
 margin_bottom = 33.0
 text = "tiles"
 script = ExtResource( 2 )

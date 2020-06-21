@@ -15,16 +15,13 @@ namespace zelcrawler.world
 
 		[Export] private LevelEnum _defaultLevel = LevelEnum.Tutorial;
 		private ChunkQueue _chunkQueue;
-		private Chunk[,] _chunks;
 		[Export] private int _chunkSideLength = 16;
-		[Export] private int _worldSize = 16384;
 		private int DefaultRadius = 2;
-
+		private Dictionary<Vector2, Chunk> _chunks;
 		public int GeneratedTiles { get; private set; }
 
 		public override void _Ready()
 		{
-			_chunks = new Chunk[_worldSize, _worldSize];
 			_worldMap = GetNode<TileMap>("WorldMap");
 
 			switch (_defaultLevel)
@@ -36,7 +33,8 @@ namespace zelcrawler.world
 					_currentLevel = new DesertLevel();
 					break;
 			}
-			
+
+			_chunks = new Dictionary<Vector2, Chunk>(_currentLevel.WorldSizeRequirement);
 			_chunkQueue = new ChunkQueue(50);
 		}
 
@@ -119,14 +117,15 @@ namespace zelcrawler.world
 
 			for (int xRound = x - radius; xRound < x + radius; xRound++)
 			for (int yRound = y - radius; yRound < y + radius; yRound++)
-				if (xRound >= 0 && xRound < _worldSize && yRound >= 0 && yRound < _worldSize)
-				{
-					if (_chunks[xRound, yRound] == null)
-						_chunks[xRound, yRound] = new Chunk(_chunkSideLength, _currentLevel,
-							ChunkPosToMap(new Vector2(xRound, yRound)));
+			{
+				Vector2 chunkPos = new Vector2(xRound, yRound);
+				
+				if (! _chunks.ContainsKey(chunkPos))
+					_chunks[chunkPos] = new Chunk(_chunkSideLength, _currentLevel,
+						ChunkPosToMap(chunkPos));
 
-					chunksAround.Add(_chunks[xRound, yRound]);
-				}
+				chunksAround.Add(_chunks[chunkPos]);
+			}
 
 			return chunksAround.ToArray();
 		}
