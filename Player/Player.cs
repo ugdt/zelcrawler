@@ -17,7 +17,7 @@ namespace zelcrawler.player
         private float _currentSpeed;
         [Export] private int _friction = 500;
         private bool _isMoving;
-        private Vector2 _lastPosition = Vector2.Zero;
+        private Vector2 _lastPosition = Vector2.One * 16;
 
         [Export] private int _maxSpeed = 75;
         private Vector2 _playerDirection = Vector2.Zero;
@@ -26,12 +26,10 @@ namespace zelcrawler.player
 
         public override void _Ready()
         {
-            Position = new Vector2(32768, 32768);
             _aTree = GetNode<AnimationTree>("AnimationTree");
             _sword = GetNode<Sword>("Sword");
             _aTreePlayback =
                 (AnimationNodeStateMachinePlayback) _aTree.Get("parameters/AnimationNodeStateMachine/playback");
-            _lastPosition = Vector2.Zero;
         }
 
         private Vector2 GetInput(float delta)
@@ -110,7 +108,7 @@ namespace zelcrawler.player
                 }
             }
 
-            if ((Position - _lastPosition).Abs().LengthSquared() > 256)
+            if ((Position - _lastPosition).Abs().LengthSquared() >= 256)
             {
                 EmitSignal("moved", Position.x, Position.y, _worldGenRadius);
                 _lastPosition = Position;
