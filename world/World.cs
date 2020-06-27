@@ -24,8 +24,8 @@ namespace zelcrawler.world
 		private int DefaultRadius = 2;
 		private Dictionary<Vector2, Chunk> _chunks;
 
-		private static string _dbPath = "./testdb.sqlite";
-		private static string _dbConnectionString = $"Data Source={_dbPath};Version=3;";
+		private const string DbPath = "./testdb.sqlite";
+		private static readonly string DbConnectionString = $"Data Source={DbPath};Version=3;";
 		public int GeneratedTiles { get; private set; }
 
 		public override void _Ready()
@@ -50,9 +50,9 @@ namespace zelcrawler.world
 
 		private void InitializeDb()
 		{
-			if (!File.Exists(_dbPath))
+			if (!File.Exists(DbPath))
 			{
-				SQLiteConnection.CreateFile(_dbPath);
+				SQLiteConnection.CreateFile(DbPath);
 				CreateTables();
 			}
 		}
@@ -60,7 +60,7 @@ namespace zelcrawler.world
 
 		private void CreateTables()
 		{
-			using (SQLiteConnection connection = new SQLiteConnection(_dbConnectionString))
+			using (SQLiteConnection connection = new SQLiteConnection(DbConnectionString))
 			{
 				connection.Open();
 				using (SQLiteTransaction transaction = connection.BeginTransaction())
@@ -76,39 +76,40 @@ namespace zelcrawler.world
 
 		private async Task SaveChunkToDb(IEnumerable<Chunk> chunks)
 		{
-			string insertChunkSql = @"INSERT INTO Chunk (chunk_x, chunk_y) VALUES (@chunkX, @chunkY); SELECT last_insert_rowid()";
+			string lastInsertedRowIdSql = "SELECT last_insert_rowid();";
+			string insertChunkSql = "INSERT INTO Chunk (chunk_x, chunk_y) VALUES (@chunkX, @chunkY);";
 			string insertTileSql = "INSERT INTO ChunkToTile (chunk_id, tile_id, tile_x, tile_y) VALUES (@chunkId, @tileId, @tileX, @tileY)";
 
-			using (SQLiteConnection connection = new SQLiteConnection(_dbConnectionString))
+			using SQLiteConnection connection = new SQLiteConnection(DbConnectionString);
+			connection.Open();
+			
+			using SQLiteTransaction transaction = connection.BeginTransaction();
+
+			foreach (Chunk chunk in chunks)
 			{
-				connection.Open();
-				using (SQLiteTransaction transaction = connection.BeginTransaction())
+				Vector2 chunkPos = MapPosToChunk(chunk.MapPosition);
+				int chunkX = (int) chunkPos.x;
+				int chunkY = (int) chunkPos.y;
+				
+				await connection.ExecuteAsync(insertChunkSql, new {chunkX, chunkY}, transaction);
+				int chunkRowId = await connection.QuerySingleAsync<int>(lastInsertedRowIdSql, transaction);
+				
+				Tile[,] tiles = chunk.GetTiles();
+
+				for (int x = 0; x < tiles.GetLength(0); x++)
+				for (int y = 0; y < tiles.GetLength(1); y++)
 				{
-					foreach (Chunk chunk in chunks)
-					{
-						Tile[,] tiles = chunk.GetTiles();
-
-						Vector2 chunkPos = MapPosToChunk(chunk.MapPosition);
-						int chunkX = (int) chunkPos.x;
-						int chunkY = (int) chunkPos.y;
-
-						int chunkId = await connection.QuerySingleAsync<int>(insertChunkSql, new {chunkX, chunkY});
-
-						for (int x = 0; x < tiles.GetLength(0); x++)
-						for (int y = 0; y < tiles.GetLength(1); y++)
-						{
-							Tile tile = tiles[x, y];
-							int tileRowId = tile.TileId + 1; // dirty fucking hack
-							await connection.ExecuteAsync(insertTileSql, new {chunkId, tileId = tileRowId, tileX = x, tileY = y});
-						}
-					}
-
-					transaction.Commit();
+					Tile tile = tiles[x, y];
+					int tileRowId = tile.TileId + 1; // TODO: Make it so that this looks up the tileId from its name, and drop the tile_id column
+					await connection.ExecuteAsync(insertTileSql, new {chunkId = chunkRowId, tileId = tileRowId, tileX = x, tileY = y}, transaction);
 				}
 			}
+			
+			transaction.Commit();
+			transaction.Dispose();
 		}
 
-		private void GenerateChunks(int worldX, int worldY, int radius)
+		private void GenerateChunks(int worldX, int worldY, int radius, bool saveChunks)
 		{
 			Vector2 chunkPos = GetChunkPos(worldX, worldY);
 			Chunk[] chunksAround = GetChunksAround((int) chunkPos.x, (int) chunkPos.y, radius);
@@ -135,7 +136,8 @@ namespace zelcrawler.world
 				}
 			}
 
-			Task.Run(() => SaveChunkToDb(chunksToLoad));
+			if (saveChunks)
+				Task.Run(() => SaveChunkToDb(chunksToLoad));
 		}
 
 		private void LoadChunk(Chunk chunk)
@@ -230,14 +232,14 @@ namespace zelcrawler.world
 			return new Vector2(chunkX, chunkY);
 		}
 
-		public void _moved(int worldX, int worldY, int radius = -1)
+		public void _moved(int worldX, int worldY, int radius = -1, bool saveChunks = false)
 		{
 			if (radius < 1)
 			{
 				radius = DefaultRadius;
 			}
 			
-			GenerateChunks(worldX, worldY, radius);
+			GenerateChunks(worldX, worldY, radius, saveChunks);
 		}
 	}
 }

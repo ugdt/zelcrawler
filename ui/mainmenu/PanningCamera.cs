@@ -6,7 +6,7 @@ namespace zelcrawler.ui.mainmenu
     public class PanningCamera : Camera2D
     {
         [Signal]
-        public delegate void moved(int x, int y, int radius);
+        public delegate void moved(int x, int y, int radius, bool saveChunks);
 
         private const int Xmin = 0;
         private const int Ymin = 0;
@@ -42,7 +42,7 @@ namespace zelcrawler.ui.mainmenu
 
             if ((Position - _lastPosition).Abs().LengthSquared() > 256)
             {
-                EmitSignal("moved", Position.x, Position.y, Radius);
+                EmitSignal("moved", Position.x, Position.y, Radius, false);
                 _lastPosition = Position;
             }
         }

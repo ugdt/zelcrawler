@@ -16,7 +16,7 @@ CREATE TABLE IF NOT EXISTS ChunkToTile (
     tile_y INT NOT NULL,
     FOREIGN KEY(chunk_id) REFERENCES Chunk(ROWID),
     FOREIGN KEY(tile_id) REFERENCES Tile(ROWID),
-    UNIQUE(tile_x, tile_y) ON CONFLICT IGNORE
+    UNIQUE(chunk_id, tile_x, tile_y) ON CONFLICT IGNORE
 );
 
 CREATE TABLE IF NOT EXISTS Tile (

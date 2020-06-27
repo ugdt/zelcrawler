@@ -6,7 +6,7 @@ namespace zelcrawler.player
     public class Player : KinematicBody2D
     {
         [Signal]
-        public delegate void moved(int x, int y, int radius);
+        public delegate void moved(int x, int y, int radius, bool saveChunks);
 
         [Export] private int _acceleration = 500;
 
@@ -110,7 +110,7 @@ namespace zelcrawler.player
 
             if ((Position - _lastPosition).Abs().LengthSquared() >= 256)
             {
-                EmitSignal("moved", Position.x, Position.y, _worldGenRadius);
+                EmitSignal("moved", Position.x, Position.y, _worldGenRadius, true);
                 _lastPosition = Position;
             }
         }
