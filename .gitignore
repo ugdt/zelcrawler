@@ -11,6 +11,9 @@ export_presets.cfg
 .mono/
 data_*/
 
-#Rider
-nextGame.csproj.DotSettings
+# Rider
+zelcrawler.csproj.DotSettings
 .idea/
+
+# SQLite
+*.sqlite
