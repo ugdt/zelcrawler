@@ -2,7 +2,7 @@ name: "godot-ci export"
 on: push
 
 env:
-  GODOT_VERSION: mono-3.2.2
+  GODOT_VERSION: 3.2.2-mono
   EXPORT_NAME: zelcrawler
 
 jobs:
