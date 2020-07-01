@@ -76,13 +76,13 @@ jobs:
       - name: Install rsync 📚
         run: |
           apt-get update && apt-get install -y rsync
-      - name: Deploy to GitHub Pages 🚀
-        uses: JamesIves/github-pages-deploy-action@releases/v3
+      - name: Deploy to Github Pages 
+        uses: peaceiris/actions-gh-pages@v3
         with:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          BRANCH: master # The branch the action should deploy to.
-          FOLDER: build/web # The folder the action should deploy.
-          REPOSITORY_NAME: ugdt/ugdt.github.io
+          github_token: ${{ secrets.ACCESS_TOKEN }}
+          publish_dir: ./public
+          external_repository: ugdt/ugdt.github.io
+          publish_branch: master  # deploying branch
 
   export-mac:
     name: Mac Export
