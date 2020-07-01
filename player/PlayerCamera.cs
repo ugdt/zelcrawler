@@ -7,7 +7,7 @@ namespace zelcrawler.player
         private Vector2 _step, _min, _max = Vector2.Zero;
         [Export] private float Max = 15f;
         [Export] private float Min = .5f;
-        [Export] private float Step = 0.5f;
+        [Export] private float Step = 3f;
         
         private int _zoomSpeed = 5;
         private Vector2 _cachedZoom = Vector2.Zero;
@@ -44,7 +44,7 @@ namespace zelcrawler.player
         {
             if (e.IsActionReleased("zoom_in"))
             {
-                _cachedZoom -= _step * 2;
+                _cachedZoom -= _step;
             }
 
             if (e.IsActionReleased("zoom_out"))
