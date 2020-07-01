@@ -1,0 +1,34 @@
+name: "Deploy to Site"
+on:
+  push:
+    branches:
+      - master
+
+env:
+  GODOT_VERSION: 3.2.2
+  EXPORT_NAME: zelcrawler
+
+jobs:
+  export-web:
+    name: Web Export
+    runs-on: ubuntu-latest
+    container:
+      image: barichello/godot-ci:mono-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v1
+      - name: Setup
+        run: |
+          mkdir -v -p ~/.local/share/godot/templates
+          mv /root/.local/share/godot/templates/${GODOT_VERSION}.stable.mono ~/.local/share/godot/templates/${GODOT_VERSION}.stable.mono
+      - name: Web Build
+        run: |
+          mkdir -v -p build/web
+          godot -v --export "HTML5" build/web/index.html
+      - name: Deploy to Github Pages 
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          personal_token: ${{ secrets.ACCESS_TOKEN }}
+          publish_dir: build/web
+          external_repository: ugdt/ugdt.github.io
+          publish_branch: master  # deploying branch
