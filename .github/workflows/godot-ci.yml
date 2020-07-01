@@ -72,14 +72,10 @@ jobs:
         with:
           name: web
           path: build/web
-      # Installing rsync is needed in order to deploy to GitHub Pages. Without it, the build will fail.
-      - name: Install rsync 📚
-        run: |
-          apt-get update && apt-get install -y rsync
       - name: Deploy to Github Pages 
         uses: peaceiris/actions-gh-pages@v3
         with:
-          personal_token: ${{ secrets.ACCESS_TOKEN }}
+          deploy_key: ${{ secrets.ACTIONS_DEPLOY_KEY }}
           publish_dir: ./public
           external_repository: ugdt/ugdt.github.io
           publish_branch: master  # deploying branch
