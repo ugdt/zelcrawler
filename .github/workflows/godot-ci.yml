@@ -75,7 +75,7 @@ jobs:
       - name: Deploy to Github Pages 
         uses: peaceiris/actions-gh-pages@v3
         with:
-          deploy_key: ${{ secrets.ACTIONS_DEPLOY_KEY }}
+          personal_token: ${{ secrets.ACCESS_TOKEN }}
           publish_dir: build/web
           external_repository: ugdt/ugdt.github.io
           publish_branch: master  # deploying branch
