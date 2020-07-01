@@ -1,8 +1,5 @@
 name: "Godot Export"
 on:
-  push:
-    branches:
-      - master
   pull_request:
     branches:
       - master
@@ -29,11 +26,6 @@ jobs:
         run: |
           mkdir -v -p build/windows
           godot -v --export "Windows Desktop" build/windows/$EXPORT_NAME.exe
-      - name: Upload Artifact
-        uses: actions/upload-artifact@v1
-        with:
-          name: windows
-          path: build/windows
 
   export-linux:
     name: Linux Export
@@ -51,11 +43,6 @@ jobs:
         run: |
           mkdir -v -p build/linux
           godot -v --export "Linux/X11" build/linux/$EXPORT_NAME.x86_64
-      - name: Upload Artifact
-        uses: actions/upload-artifact@v1
-        with:
-          name: linux
-          path: build/linux
 
   export-web:
     name: Web Export
@@ -73,18 +60,6 @@ jobs:
         run: |
           mkdir -v -p build/web
           godot -v --export "HTML5" build/web/index.html
-      - name: Upload Artifact
-        uses: actions/upload-artifact@v1
-        with:
-          name: web
-          path: build/web
-      - name: Deploy to Github Pages 
-        uses: peaceiris/actions-gh-pages@v3
-        with:
-          personal_token: ${{ secrets.ACCESS_TOKEN }}
-          publish_dir: build/web
-          external_repository: ugdt/ugdt.github.io
-          publish_branch: master  # deploying branch
 
   export-mac:
     name: Mac Export
@@ -102,8 +77,3 @@ jobs:
         run: |
           mkdir -v -p build/mac
           godot -v --export "Mac OSX" build/mac/$EXPORT_NAME.zip
-      - name: Upload Artifact
-        uses: actions/upload-artifact@v1
-        with:
-          name: mac
-          path: build/mac
